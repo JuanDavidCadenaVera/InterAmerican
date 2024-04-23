@@ -34,10 +34,10 @@ public class Conexion {
         try {
             Class.forName(driver);
             cx = DriverManager.getConnection(url + bd, user, password);
-             System.out.println("Se conecto a base de datos " + bd);
+             System.out.println("Se conecto correctamente a la base de datos " + bd);
     
         } catch (ClassNotFoundException | SQLException e) {
-            System.out.println("No se conecto a base de datos " + bd);
+            System.out.println("No se conecto correctamente a la base de datos " + bd);
 }
         return cx;
     }
@@ -45,8 +45,9 @@ public class Conexion {
     public void desconectar(){
         try {
             cx.close();
+            System.out.println("Se deconecto correctamente la base de datos " + bd);
         } catch (SQLException ex) {
-            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No se desconecto la base de datos: " + bd);
         }
     }
     
