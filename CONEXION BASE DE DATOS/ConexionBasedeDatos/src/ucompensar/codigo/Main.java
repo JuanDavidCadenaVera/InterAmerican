@@ -13,7 +13,7 @@ package ucompensar.codigo;
 public class Main {
     public static void main(String[] args) {
         Conexion c = new Conexion ();
-        c.conectar();
         Consultar.imprimir();
+        c.desconectar();
         }
     }

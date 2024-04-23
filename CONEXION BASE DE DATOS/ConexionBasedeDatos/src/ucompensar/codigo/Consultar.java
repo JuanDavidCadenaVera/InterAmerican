@@ -43,7 +43,6 @@ public class Consultar {
 
         try (Connection conn = new Conexion().conectar()) {
             if (conn == null) {
-                System.out.println("La conexión no pudo ser establecida.");
                 return;
             }
             PreparedStatement pstmt = conn.prepareStatement(sql);
