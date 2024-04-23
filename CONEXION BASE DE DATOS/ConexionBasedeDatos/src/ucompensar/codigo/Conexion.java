@@ -13,45 +13,41 @@ package ucompensar.codigo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Conexion {
-    String bd = "ingles"; 
-    String url = "jdbc:mysql://localhost:3306/";
-    String user = "root";
-    String password = "B0G0TA2005..";
-    String driver = "com.mysql.cj.jdbc.Driver";
-    Connection conn = null;
-    
-    
+    private String bd ="ingles"; 
+    private String url = "jdbc:mysql://localhost:3306/";
+    private String user = "root";
+    private String password = "B0G0TA2005..";
+    private String driver = "com.mysql.cj.jdbc.Driver";
+    private Connection conn = null;
 
-    public Conexion(String bd) {
-        this.bd = bd;
-    }
-    
+
+
     public Connection conectar() {
         try {
-            Class.forName(driver);
+            if (conn != null && !conn.isClosed()) {
+                return conn; 
+            }
+            Class.forName(driver); 
             conn = DriverManager.getConnection(url + bd, user, password);
-             System.out.println("Se conecto correctamente a la base de datos " + bd);
-    
+            System.out.println("Se conectó correctamente a la base de datos " + bd);
         } catch (ClassNotFoundException | SQLException e) {
-            System.out.println("No se conecto correctamente a la base de datos " + bd);
-}
+            System.out.println("No se conectó correctamente a la base de datos " + bd + ": " + e.getMessage());
+        }
         return conn;
     }
-    
-    public void desconectar(){
-        try {
-            conn.close();
-            System.out.println("Se deconecto correctamente la base de datos " + bd);
-        } catch (SQLException ex) {
-            System.out.println("No se desconecto la base de datos: " + bd);
+
+    public void desconectar() {
+        if (conn != null) {
+            try {
+                conn.close();
+                System.out.println("Se desconectó correctamente de la base de datos " + bd);
+            } catch (SQLException ex) {
+                System.out.println("No se desconectó la base de datos: " + bd + ": " + ex.getMessage());
+            }
         }
     }
-    
-    
 }
 
     
