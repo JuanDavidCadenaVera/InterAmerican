@@ -22,7 +22,7 @@ public class Conexion {
     String user = "root";
     String password = "B0G0TA2005..";
     String driver = "com.mysql.cj.jdbc.Driver";
-    Connection cx = null;
+    Connection conn = null;
     
     
 
@@ -33,18 +33,18 @@ public class Conexion {
     public Connection conectar() {
         try {
             Class.forName(driver);
-            cx = DriverManager.getConnection(url + bd, user, password);
+            conn = DriverManager.getConnection(url + bd, user, password);
              System.out.println("Se conecto correctamente a la base de datos " + bd);
     
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("No se conecto correctamente a la base de datos " + bd);
 }
-        return cx;
+        return conn;
     }
     
     public void desconectar(){
         try {
-            cx.close();
+            conn.close();
             System.out.println("Se deconecto correctamente la base de datos " + bd);
         } catch (SQLException ex) {
             System.out.println("No se desconecto la base de datos: " + bd);
