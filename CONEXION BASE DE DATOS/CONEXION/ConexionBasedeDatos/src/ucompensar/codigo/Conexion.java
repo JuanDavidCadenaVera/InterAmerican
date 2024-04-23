@@ -20,23 +20,25 @@ public class Conexion {
     String bd = "ingles"; 
     String url = "jdbc:mysql://localhost:3306/";
     String user = "root";
-    String password = "";
+    String password = "B0G0TA2005..";
     String driver = "com.mysql.cj.jdbc.Driver";
-    Connection cx;
+    Connection cx = null;
+    
+    
 
     public Conexion(String bd) {
         this.bd = bd;
     }
-
+    
     public Connection conectar() {
         try {
             Class.forName(driver);
             cx = DriverManager.getConnection(url + bd, user, password);
              System.out.println("Se conecto a base de datos " + bd);
-            
+    
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("No se conecto a base de datos " + bd);
-        }
+}
         return cx;
     }
     
