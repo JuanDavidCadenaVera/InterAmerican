@@ -1,7 +1,9 @@
 Instituto InterAmerica
 
 Juan David Cadena Vera
+
 Erik Fabian Alarcón Riaño
+
 Samuel David Ballesteros Cristo
 
 Fundación Universitaria Compensar
