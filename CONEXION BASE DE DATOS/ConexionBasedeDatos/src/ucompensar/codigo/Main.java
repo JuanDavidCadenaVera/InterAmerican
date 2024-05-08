@@ -1,4 +1,5 @@
 package ucompensar.codigo;
+import java.sql.Connection;
 
 
 /*
@@ -12,6 +13,10 @@ package ucompensar.codigo;
  */
 public class Main {
     public static void main(String[] args) {
-       
-        }
+        Conexion C = new Conexion();
+        Connection conn = C.conectar(); 
+        Usuario U = new Usuario("cadenaverajuandavid@gmail.com", "1029141151");
+        U.verificarUsuario(conn);
+
     }
+}

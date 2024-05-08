@@ -20,7 +20,7 @@ public class Conexion {
     private String user = "ADMIN";
     private String password = "InterAmerican2024";
     private String driver = "com.mysql.cj.jdbc.Driver";
-    private Connection conn = null;
+    private Connection conn ;
 
 
 
