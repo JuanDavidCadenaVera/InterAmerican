@@ -68,6 +68,27 @@ CREATE TABLE tb_usuarios (
   TbU_Tipo_Persona varchar(15)
 );
 
+CREATE TABLE tb_horario (
+  TbH_ID_Horario varchar (10) NOT NULL PRIMARY KEY,
+  TbH_Dia_Semana Varchar (10),
+  TbH_Hora_Inicio Time,
+  TbH_Hora_Final Time
+);
+
+CREATE TABLE tb_nivel_matricula(
+  TbNM_ID_Horario varchar (10),
+  TbNM_ID_Nivel varchar (5),
+  TbNM_ID_Matricula varchar(8)
+);
+
+CREATE TABLE tb_nivel(
+  TbN_ID_Nivel varchar(5),
+  TbN_Duracion_Horas varchar(10)
+);
+
+
+-- Llaves Foraneas --
+
 -- Primera llave--
 ALTER TABLE tb_carga_docente
   ADD CONSTRAINT FK_tb_carga_docente_tb_contrato 
@@ -120,3 +141,26 @@ ADD CONSTRAINT FK_tb_usuarios_tb_personas
 FOREIGN KEY (TbU_ID_Contraseña)
 REFERENCES tb_personas (TbP_ID_Personas);
 
+-- Index --
+CREATE INDEX idx_tb_nivel_matricula ON tb_nivel_matricula(TbNM_ID_Matricula);
+
+-- Octava Llave --
+ALTER TABLE tb_matricula
+ADD CONSTRAINT FK_tb_matricula_tb_nivel_matricuka
+FOREIGN KEY (TbM_ID_Matricula)
+REFERENCES tb_nivel_matricula (TbNM_ID_Matricula);
+
+-- Index --
+CREATE INDEX idx_tb_nivel ON tb_nivel(TbN_ID_Nivel);
+
+-- Novena Llave --
+ALTER TABLE tb_nivel_matricula
+ADD CONSTRAINT FK_tb_nivel_matricula_tb_nivel
+FOREIGN KEY (TbNM_ID_Nivel)
+REFERENCES tb_nivel (TbN_ID_Nivel);
+
+-- Decima Llave --
+ALTER TABLE tb_nivel_matricula
+ADD CONSTRAINT FK_tb_nivel_matricula_tb_horario
+FOREIGN KEY (TbNM_ID_Horario)
+REFERENCES tb_horario (TbH_ID_Horario);
