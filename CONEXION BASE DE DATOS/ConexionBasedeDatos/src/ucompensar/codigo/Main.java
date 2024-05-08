@@ -13,10 +13,7 @@ import java.sql.Connection;
  */
 public class Main {
     public static void main(String[] args) {
-        Conexion C = new Conexion();
-        Connection conn = C.conectar(); 
         Usuario U = new Usuario("cadenaverajuandavid@gmail.com", "1029141151");
-        U.verificarUsuario(conn);
-
+            System.out.println(U.verificarCredenciales());
     }
 }
