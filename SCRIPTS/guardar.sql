@@ -10,7 +10,7 @@ CREATE TABLE tb_carga_docente (
   TbCD_ID_Detalles varchar(5) NOT NULL PRIMARY KEY,
   TbCD_Contrato varchar(5) NOT NULL,
   TbCD_Horas_Trabajadas int NULL,
-  TbCD_Semana varchar(5) NOT NULL
+  TbCD_Dia_Semana varchar(10) NOT NULL
 );
 
 
@@ -164,3 +164,12 @@ ALTER TABLE tb_nivel_matricula
 ADD CONSTRAINT FK_tb_nivel_matricula_tb_horario
 FOREIGN KEY (TbNM_ID_Horario)
 REFERENCES tb_horario (TbH_ID_Horario);
+
+-- Index --
+CREATE INDEX idx_tb_horario_dia_semana ON tb_horario(TbH_Dia_Semana);
+
+-- Onceava Llave --
+ALTER TABLE tb_carga_docente
+ADD CONSTRAINT Fk_tb_carga_docente_tb_horario
+FOREIGN KEY (TbCD_Dia_Semana)
+REFERENCES tb_horario (TbH_Dia_Semana);
