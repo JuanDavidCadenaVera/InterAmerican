@@ -37,7 +37,7 @@ CREATE TABLE tb_personas (
   TbP_Nombre varchar(15) NULL,
   TbP_Apellido varchar(15) NULL,
   TbP_Telefono varchar(11) NULL,
-  TbP_Direccion_Email varchar(30) NULL,
+  TbP_Direccion_Email varchar(100) NULL,
   TbP_Direccion varchar(40) NULL,
   TbP_Fecha_Nacimiento date NULL
 );
@@ -63,7 +63,7 @@ CREATE TABLE tb_tipo_persona (
 );
 
 CREATE TABLE tb_usuarios (
-  TbU_Email varchar(30),
+  TbU_Email varchar(100),
   TbU_ID_Contraseña varchar(10) PRIMARY KEY,
   TbU_Tipo_Persona varchar(15)
 );
@@ -83,7 +83,7 @@ CREATE TABLE tb_nivel_matricula(
 
 CREATE TABLE tb_nivel(
   TbN_ID_Nivel varchar(5),
-  TbN_Duracion_Horas varchar(10)
+  TbN_Duracion_Horas varchar(50)
 );
 
 
@@ -145,10 +145,10 @@ REFERENCES tb_personas (TbP_ID_Personas);
 CREATE INDEX idx_tb_nivel_matricula ON tb_nivel_matricula(TbNM_ID_Matricula);
 
 -- Octava Llave --
-ALTER TABLE tb_matricula
+ALTER TABLE tb_nivel_matricula
 ADD CONSTRAINT FK_tb_matricula_tb_nivel_matricuka
-FOREIGN KEY (TbM_ID_Matricula)
-REFERENCES tb_nivel_matricula (TbNM_ID_Matricula);
+FOREIGN KEY (TbNM_ID_Matricula)
+REFERENCES tb_matricula (TbM_ID_Matricula);
 
 -- Index --
 CREATE INDEX idx_tb_nivel ON tb_nivel(TbN_ID_Nivel);
