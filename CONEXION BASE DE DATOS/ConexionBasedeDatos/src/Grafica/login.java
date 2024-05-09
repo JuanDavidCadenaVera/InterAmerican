@@ -208,9 +208,6 @@ public class login extends javax.swing.JFrame {
     Usuario usuario = new Usuario(username, password);
     String tipoUsuario = usuario.verificarCredenciales();  // Ahora sin parámetros
 
-    // Muestra el tipo de usuario para depuración
-    System.out.println("Tipo de Usuario: " + tipoUsuario);  // Agregado para depuración
-
     // Evalúa el tipo de usuario y muestra la ventana correspondiente
     if (tipoUsuario != null) {
         switch (tipoUsuario.toLowerCase()) {  // Modificado para manejar mayúsculas/minúsculas
