@@ -200,16 +200,7 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_showMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        for (double i = 0.0; i <=1.0; i = i+0.1){
-            String val = i+ "";
-            float f = Float.valueOf(val);
-            this.setOpacity(f);
-            try{
-                Thread.sleep(50);
-            }catch(Exception e){
-                
-            }
-        }
+
     }//GEN-LAST:event_formWindowOpened
 
     private void InicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioSesionActionPerformed
