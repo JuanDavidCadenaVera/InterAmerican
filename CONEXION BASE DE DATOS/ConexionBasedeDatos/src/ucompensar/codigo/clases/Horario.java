@@ -4,12 +4,11 @@
  */
 package ucompensar.codigo.clases;
 
-import java.util.Date;
 
 /**
  *
  * @author fabia
  */
 public interface Horario {
-    void horario(String TbH_ID_Horario, String TbH_Dia_Semana, Date TbH_Hora_Inicio, Date TbH_Hora_Final);
+    String horario();
 }

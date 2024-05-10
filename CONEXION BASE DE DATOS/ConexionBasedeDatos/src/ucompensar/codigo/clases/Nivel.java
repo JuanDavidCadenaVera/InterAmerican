@@ -9,5 +9,5 @@ package ucompensar.codigo.clases;
  * @author fabia
  */
 public interface Nivel {
-    void nivel (String TbN_ID_Nivel);
+    String nivel ();
 }

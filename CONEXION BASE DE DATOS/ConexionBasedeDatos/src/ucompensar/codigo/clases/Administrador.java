@@ -12,11 +12,12 @@ import java.util.Date;
  */
 public class Administrador extends Personas {
     private String tipoPersona = "TP-3";
-    
-    public Administrador(String tipoPersona, String identificacion, String tipoDocumento, String nombre, String apellido, String email, String direccion, Date fechaNacimiento) {
-        super(identificacion, tipoDocumento, nombre, apellido, email, direccion, fechaNacimiento);
-        this.tipoPersona = tipoPersona;
+
+    public Administrador(String email, String contraseña) {
+        super(email, null);
     }
+
+    
 
     public String getTipoPersona() {
         return tipoPersona;
@@ -27,9 +28,11 @@ public class Administrador extends Personas {
     }
 
     @Override
-    public void Consultar() {
+    public String Consultar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+
     
 
     

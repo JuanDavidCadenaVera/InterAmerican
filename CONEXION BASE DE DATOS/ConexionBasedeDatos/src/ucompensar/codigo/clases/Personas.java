@@ -5,29 +5,25 @@
 package ucompensar.codigo.clases;
 
 import java.util.Date;
+import ucompensar.codigo.Usuario;
 
 /**
  *
  * @author 52130424
  */
-public abstract class Personas {
+public abstract class Personas extends Usuario{
     private String identificacion;
     private String tipoDocumento;
     private String nombre;
     private String apellido;
-    private String email;
     private String direccion;
     private Date fechaNacimiento;
-    
-    public Personas(String identificacion, String tipoDocumento, String nombre, String apellido, String email, String direccion, Date fechaNacimiento){
-    this.identificacion = identificacion;
-    this.tipoDocumento = tipoDocumento;
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.email = email;
-    this.direccion = direccion;
-    this.fechaNacimiento = fechaNacimiento;
+
+     public Personas(String email, String contraseña) {
+        super(email, contraseña); 
     }
+    
+  
 
     public String getIdentificacion() {
         return identificacion;
@@ -61,13 +57,6 @@ public abstract class Personas {
         this.apellido = apellido;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getDireccion() {
         return direccion;
@@ -85,6 +74,6 @@ public abstract class Personas {
         this.fechaNacimiento = fechaNacimiento;
     }
     
-   public abstract void Consultar();
-    
+   public abstract String Consultar();
+   
 }

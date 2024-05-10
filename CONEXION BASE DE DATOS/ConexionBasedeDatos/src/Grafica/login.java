@@ -5,6 +5,7 @@
  */
 package Grafica;
 
+import Grafica.Estudiante.VentanaEstudiante;
 import javax.swing.JOptionPane;
 import ucompensar.codigo.Usuario;
 
@@ -216,7 +217,7 @@ public class login extends javax.swing.JFrame {
                 ventanaProfesor.setVisible(true);
                 break;
             case "estudiante":
-                VentanaEstudiante ventanaEstudiante = new VentanaEstudiante();
+                VentanaEstudiante ventanaEstudiante = new VentanaEstudiante(username, password);
                 ventanaEstudiante.setVisible(true);
                 break;
             case "administrador":
