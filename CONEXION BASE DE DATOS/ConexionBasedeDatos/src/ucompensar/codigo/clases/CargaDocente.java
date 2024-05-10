@@ -9,5 +9,5 @@ package ucompensar.codigo.clases;
  * @author fabia
  */
 public interface CargaDocente {
-    String carga (String ID, String contrato, String horasTrabajadas, String diaSemana);
+    void carga (String TbCD_ID_Detalles, String TbCD_Contrato, String TbCD_Horas_Trabajadas, String TbCD_Dia_Semana);
 }

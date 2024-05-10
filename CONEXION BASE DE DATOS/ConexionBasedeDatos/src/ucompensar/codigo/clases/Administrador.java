@@ -25,17 +25,12 @@ public class Administrador extends Personas {
     public void setTipoPersona(String tipoPersona) {
         this.tipoPersona = tipoPersona;
     }
-    
+
     @Override
-   public String Consultar(){
-        return "Rol" + tipoPersona + "\n"
-                + "Nombre: " + getNombre() + "\n"
-                + "Apellido: " + getApellido() + "\n"
-                + "Identificacion:( " + getTipoDocumento() + ") " + getIdentificacion() + "\n" 
-                + "Email: " + getEmail() + "\n"
-                + "Direccion: " + getDireccion() +"\n"
-                + "Fecha de Nacimiento: " + getFechaNacimiento()
-                ;
+    public void Consultar() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+
     
 }

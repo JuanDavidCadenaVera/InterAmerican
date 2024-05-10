@@ -85,14 +85,6 @@ public abstract class Personas {
         this.fechaNacimiento = fechaNacimiento;
     }
     
-   public String Consultar(){
-        return "Nombre: " + getNombre() + "\n"
-                + "Apellido: " + getApellido() + "\n"
-                + "Identificacion:( " + getTipoDocumento() + ") " + getIdentificacion() + "\n" 
-                + "Email: " + getEmail() + "\n"
-                + "Direccion: " + getDireccion() +"\n"
-                + "Fecha de Nacimiento: " + getFechaNacimiento()
-                ;
-    }
+   public abstract void Consultar();
     
 }
