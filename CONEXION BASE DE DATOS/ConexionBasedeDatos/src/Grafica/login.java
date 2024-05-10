@@ -219,7 +219,7 @@ public class login extends javax.swing.JFrame {
                 VentanaEstudiante ventanaEstudiante = new VentanaEstudiante();
                 ventanaEstudiante.setVisible(true);
                 break;
-            case "administrativo":
+            case "administrador":
                 VentanaAdministrativo ventanaAdministrador = new VentanaAdministrativo();
                 ventanaAdministrador.setVisible(true);
                 break;
