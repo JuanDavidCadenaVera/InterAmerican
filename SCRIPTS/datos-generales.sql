@@ -442,3 +442,5 @@ INSERT INTO tb_nivel_matricula (TbNM_ID_Horario, TbNM_ID_Nivel, TbNM_ID_Matricul
 ('2','C1','TM-82'),
 ('2','A2','TM-83'),
 ('3','B1','TM-84');
+
+

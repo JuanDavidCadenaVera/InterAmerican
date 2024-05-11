@@ -6,8 +6,8 @@ package ucompensar.codigo.clases;
 
 /**
  *
- * @author fabia
+ * @author JUAN DAVID
  */
-public interface CargaDocente {
-    String carga ();
+public interface EstudiantesP {
+    String Estudiantes();
 }

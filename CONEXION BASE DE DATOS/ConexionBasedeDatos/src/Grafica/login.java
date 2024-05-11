@@ -5,6 +5,8 @@
  */
 package Grafica;
 
+import Grafica.Administrativo.VentanaAdministrativo;
+import Grafica.Profesor.VentanaProfesor;
 import Grafica.Estudiante.VentanaEstudiante;
 import javax.swing.JOptionPane;
 import ucompensar.codigo.Usuario;
@@ -213,12 +215,13 @@ public class login extends javax.swing.JFrame {
     if (tipoUsuario != null) {
         switch (tipoUsuario.toLowerCase()) {  // Modificado para manejar mayúsculas/minúsculas
             case "profesor":
-                VentanaProfesor ventanaProfesor = new VentanaProfesor();
+                VentanaProfesor ventanaProfesor = new VentanaProfesor(username, password);
                 ventanaProfesor.setVisible(true);
                 break;
             case "estudiante":
                 VentanaEstudiante ventanaEstudiante = new VentanaEstudiante(username, password);
                 ventanaEstudiante.setVisible(true);
+                
                 break;
             case "administrador":
                 VentanaAdministrativo ventanaAdministrador = new VentanaAdministrativo();
