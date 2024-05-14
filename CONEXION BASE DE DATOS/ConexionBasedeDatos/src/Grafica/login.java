@@ -214,23 +214,21 @@ public class login extends javax.swing.JFrame {
     // Evalúa el tipo de usuario y muestra la ventana correspondiente
     if (tipoUsuario != null) {
         switch (tipoUsuario.toLowerCase()) {  // Modificado para manejar mayúsculas/minúsculas
-            case "profesor":
+            case "profesor" -> {
                 VentanaProfesor ventanaProfesor = new VentanaProfesor(username, password);
                 ventanaProfesor.setVisible(true);
-                break;
-            case "estudiante":
+            }
+            case "estudiante" -> {
                 VentanaEstudiante ventanaEstudiante = new VentanaEstudiante(username, password);
                 ventanaEstudiante.setVisible(true);
-                
-                break;
-            case "administrador":
+            }
+            case "administrador" -> {
                 VentanaAdministrativo ventanaAdministrador = new VentanaAdministrativo();
                 ventanaAdministrador.setVisible(true);
-                break;
-            default:
-                JOptionPane.showMessageDialog(this, "Tipo de usuario desconocido: " + tipoUsuario);  // Modificado para mostrar el tipo desconocido
-                break;
+            }
+            default -> JOptionPane.showMessageDialog(this, "Tipo de usuario desconocido: " + tipoUsuario);  // Modificado para mostrar el tipo desconocido
         }
+        // Modificado para manejar mayúsculas/minúsculas
         // Cerrar la ventana de inicio de sesión después de iniciar sesión exitosamente
         this.dispose();
     } else {
