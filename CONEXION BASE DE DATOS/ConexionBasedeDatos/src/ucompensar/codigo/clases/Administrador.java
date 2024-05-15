@@ -4,7 +4,6 @@
  */
 package ucompensar.codigo.clases;
 
-import java.util.Date;
 
 /**
  *

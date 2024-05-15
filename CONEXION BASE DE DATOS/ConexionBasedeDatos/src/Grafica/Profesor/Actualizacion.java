@@ -2,7 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Grafica.Estudiante;
+package Grafica.Profesor;
+
 
 import ucompensar.codigo.clases.Profesor;
 
@@ -12,19 +13,20 @@ import ucompensar.codigo.clases.Profesor;
  */
 public class Actualizacion extends javax.swing.JFrame {
     private Profesor profesor;
-
+    private Cursos cursos;
     /**
      * Creates new form Actualizacion
      */
-    public Actualizacion(String email, String contraseña) {
+    public Actualizacion(String email, String contraseña, Cursos cursos) {
         initComponents();
-        this.profesor = new Profesor(email,contraseña);
+        this.profesor = new Profesor(email, contraseña);
+        this.cursos = cursos;
         mostrarInformacionPersonal();
     }
 
     
      private void mostrarInformacionPersonal() {
-        String informacionProfesor = this.profesor.EstudiantesActualizados();
+        String informacionProfesor = this.profesor.EstudiantesNotas();
         Informacion.setText(informacionProfesor);
     }
     /**
@@ -40,6 +42,8 @@ public class Actualizacion extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Informacion = new javax.swing.JTextArea();
+        atras = new javax.swing.JButton();
+        atras1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,27 +58,56 @@ public class Actualizacion extends javax.swing.JFrame {
         Informacion.setRows(5);
         jScrollPane1.setViewportView(Informacion);
 
+        atras.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        atras.setText("←");
+        atras.setBorder(null);
+        atras.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        atras1.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        atras1.setText("←");
+        atras1.setBorder(null);
+        atras1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        atras1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atras1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(209, 209, 209)
+                .addGap(19, 19, 19)
+                .addComponent(atras1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(106, 106, 106)
                 .addComponent(jLabel1)
                 .addContainerGap(216, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(atras)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(atras1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(atras)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -94,6 +127,11 @@ public class Actualizacion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void atras1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atras1ActionPerformed
+        this.dispose();
+        this.cursos.setVisible(true);
+    }//GEN-LAST:event_atras1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,13 +164,17 @@ public class Actualizacion extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Actualizacion("ejepmlplo@gmail.com", "numeros").setVisible(true);
+                VentanaProfesor ventanaProfesor = new VentanaProfesor("ejepmlplo@gmail.com", "numeros");
+                Cursos cursos = new Cursos("ejepmlplo@gmail.com", "numeros", ventanaProfesor);
+                new Actualizacion("ejepmlplo@gmail.com", "numeros", cursos).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Informacion;
+    private javax.swing.JButton atras;
+    private javax.swing.JButton atras1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

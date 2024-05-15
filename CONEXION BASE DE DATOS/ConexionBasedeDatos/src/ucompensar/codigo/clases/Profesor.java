@@ -320,32 +320,26 @@ public void ingresarNota(String nombreEstudiante, double nota) {
     ResultSet rs = null;
     PreparedStatement stmt = null;
     try {
-        String sql = "SELECT " +
-                     "c.TbCo_ID_Curso AS ID_Curso, " +
-                     "CONCAT(e.TbP_Nombre, ' ', e.TbP_Apellido) AS Nombre_Estudiante, " +
-                     "c.TbCo_ID_Nivel AS ID_Nivel, " +
-                     "h.TbH_Dia_Semana AS Dia_Semana, " +
-                     "TIME_FORMAT(h.TbH_Hora_Inicio, '%H:%i') AS Hora_Inicio, " +
-                     "TIME_FORMAT(h.TbH_Hora_Final, '%H:%i') AS Hora_Final, " +
-                     "c.TbCo_ID_Contrato AS ID_Contrato, " +
-                     "CONCAT(p_profesor.TbP_Nombre, ' ', p_profesor.TbP_Apellido) AS Nombre_Profesor, " +
-                     "n.TbN_Nota AS Nota " +
-                     "FROM " +
-                     "tb_curso c " +
-                     "INNER JOIN " +
-                     "tb_contrato co ON c.TbCo_ID_Contrato = co.TbC_ID_Contrato " +
-                     "INNER JOIN " +
-                     "tb_matricula m ON c.TbCo_ID_Matricula = m.TbM_ID_Matricula " +
-                     "INNER JOIN " +
-                     "tb_personas e ON m.TbM_ID_Persona = e.TbP_ID_Personas " +
-                     "INNER JOIN " +
-                     "tb_personas p_profesor ON co.TbC_ID_Personas = p_profesor.TbP_ID_Personas " +
-                     "INNER JOIN " +
-                     "tb_horario h ON c.TbCo_ID_Horario = h.TbH_ID_Horario " +
-                     "LEFT JOIN " +
-                     "tb_notas n ON m.TbM_ID_Persona = n.TbN_ID_Persona AND c.TbCo_ID_Curso = n.TbN_ID_Curso " +
-                     "WHERE " +
-                     "p_profesor.TbP_Direccion_Email = ?";
+        String sql = "SELECT\n" +
+        "c.TbCo_ID_Curso AS ID_Curso,\n" +
+        "CONCAT(e.TbP_Nombre, ' ', e.TbP_Apellido) AS Nombre_Estudiante,\n" +
+        "c.TbCo_ID_Nivel AS ID_Nivel,\n" +
+        "h.TbH_Dia_Semana AS Dia_Semana,\n" +
+        "TIME_FORMAT(h.TbH_Hora_Inicio, '%H:%i') AS Hora_Inicio,\n" +
+        "TIME_FORMAT(h.TbH_Hora_Final, '%H:%i') AS Hora_Final,\n" +
+        "c.TbCo_ID_Contrato AS ID_Contrato,\n" +
+        "CONCAT(p_profesor.TbP_Nombre, ' ', p_profesor.TbP_Apellido) AS Nombre_Profesor,\n" +
+        "n.TbN_ID_Nota AS Nota\n" +
+        "FROM\n" +
+        "tb_curso c\n" +
+        "INNER JOIN tb_contrato co ON c.TbCo_ID_Contrato = co.TbC_ID_Contrato\n" +
+        "INNER JOIN tb_matricula m ON c.TbCo_ID_Matricula = m.TbM_ID_Matricula\n" +
+        "INNER JOIN tb_personas e ON m.TbM_ID_Persona = e.TbP_ID_Personas\n" +
+        "INNER JOIN tb_personas p_profesor ON co.TbC_ID_Personas = p_profesor.TbP_ID_Personas\n" +
+        "INNER JOIN tb_horario h ON c.TbCo_ID_Horario = h.TbH_ID_Horario\n" +
+        "LEFT JOIN tb_notas n ON m.TbM_ID_Matricula = n.TbN_ID_Matricula AND c.TbCo_ID_Curso = n.TbN_ID_Curso\n" +
+        "WHERE\n" +
+        "p_profesor.TbP_Direccion_Email = ?;";
 
         stmt = conn.prepareStatement(sql);
         stmt.setString(1, getEmail()); // Reemplaza getEmail() con el correo electrónico del profesor
@@ -392,6 +386,55 @@ public void ingresarNota(String nombreEstudiante, double nota) {
     }
     return estudiantes.toString();
 }
+    
+    public String EstudiantesNotas() {
+    StringBuilder estudiantesNotas = new StringBuilder();
+    ResultSet rs = null;
+    PreparedStatement stmt = null;
+    try {
+        String sql = "SELECT CONCAT(e.TbP_Nombre, ' ', e.TbP_Apellido) AS Nombre_Estudiante,\n" +
+            "c.TbCo_ID_Curso AS ID_Curso,\n" +
+            "n.TbN_ID_Nota AS Nota \n" +
+            "FROM tb_curso c \n" +
+            "INNER JOIN tb_contrato co ON c.TbCo_ID_Contrato = co.TbC_ID_Contrato \n" +
+            "INNER JOIN tb_matricula m ON c.TbCo_ID_Matricula = m.TbM_ID_Matricula \n" +
+            "INNER JOIN tb_personas e ON m.TbM_ID_Persona = e.TbP_ID_Personas \n" +
+            "INNER JOIN tb_personas p_profesor ON co.TbC_ID_Personas = p_profesor.TbP_ID_Personas \n" +
+            "LEFT JOIN tb_notas n ON m.TbM_ID_Matricula = n.TbN_ID_Matricula AND c.TbCo_ID_Curso = n.TbN_ID_Curso \n" +
+            "WHERE p_profesor.TbP_Direccion_Email = 'fabian13426@gmail.com'";
+
+        stmt = conn.prepareStatement(sql);
+        rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            estudiantesNotas.append("Estudiantes y sus notas en los cursos del profesor:\n\n");
+            do {
+                String nombreEstudiante = rs.getString("Nombre_Estudiante");
+                String idCurso = rs.getString("ID_Curso");
+                String nota = rs.getString("Nota");
+
+                // Agrega la información al StringBuilder
+                estudiantesNotas.append("Nombre del Estudiante: ").append(nombreEstudiante).append("\n");
+                estudiantesNotas.append("ID del Curso: ").append(idCurso).append("\n");
+                estudiantesNotas.append("Nota: ").append(nota).append("\n\n");
+            } while (rs.next());
+        } else {
+            estudiantesNotas.append("No se encontraron estudiantes y sus notas en los cursos del profesor.");
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al cargar estudiantes y sus notas en los cursos del profesor: " + e.getMessage());
+        estudiantesNotas.append("Error al consultar estudiantes y sus notas en los cursos del profesor: ").append(e.getMessage());
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (stmt != null) stmt.close();
+        } catch (SQLException ex) {
+            System.err.println("Error al cerrar recursos: " + ex.getMessage());
+        }
+    }
+    return estudiantesNotas.toString();
+            
+        }    
 }
 
 

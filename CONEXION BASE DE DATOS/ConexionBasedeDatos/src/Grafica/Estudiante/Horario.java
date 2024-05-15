@@ -215,10 +215,11 @@ public class Horario extends javax.swing.JFrame {
 
         /* Create and display the form */
         
-        VentanaEstudiante ventanaEstudiante = new VentanaEstudiante("ejepmlplo@gmail.com", "numeros");
+        VentanaEstudiante VentanaEstudiante = new VentanaEstudiante("ejepmlplo@gmail.com", "numeros");
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new Horario("ejepmlplo@gmail.com","numeros", ventanaEstudiante).setVisible(true);
+                new Horario("ejepmlplo@gmail.com","numeros", VentanaEstudiante).setVisible(true);
             }
         });
     }

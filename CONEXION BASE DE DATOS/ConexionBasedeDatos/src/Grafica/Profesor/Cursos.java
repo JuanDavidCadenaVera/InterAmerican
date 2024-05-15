@@ -4,7 +4,6 @@
  */
 package Grafica.Profesor;
 
-import Grafica.Estudiante.Actualizacion;
 import Grafica.Estudiante.VentanaEstudiante;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,22 +19,24 @@ import ucompensar.codigo.clases.Profesor;
  *
  * @author JUAN DAVID
  */
-public class Estudiantes extends javax.swing.JFrame {
+public class Cursos extends javax.swing.JFrame {
      private Profesor profesor;
      private Actualizacion actualizacion;
      private VentanaProfesor ventanaProfesor;
-      private String[] nombresEstudiantes;
-      private DefaultComboBoxModel<String> notasModel;
-      private Map<String, List<Double>> notasEstudiantes = new HashMap<>();
+     private String[] nombresEstudiantes;
+     private DefaultComboBoxModel<String> notasModel;
+     private Map<String, List<Double>> notasEstudiantes = new HashMap<>();
+     private Notas notas;
       
     /**
      * Creates new form Horario
      */
-    public Estudiantes(String email, String contraseña, VentanaProfesor ventanaProfesor) {
+        public Cursos(String email, String contraseña, VentanaProfesor ventanaProfesor) {
         initComponents();
         this.profesor = new Profesor(email,contraseña);
         this.ventanaProfesor = ventanaProfesor;
-        this.actualizacion = new Actualizacion(email,contraseña);
+        this.notas = new Notas (email, contraseña, this);
+        this.actualizacion = new Actualizacion(email,contraseña, this);
         mostrarInformacionPersonal();
         this.nombresEstudiantes = profesor.obtenerNombresEstudiantes();
         this.notasModel = new DefaultComboBoxModel<>();
@@ -134,6 +135,7 @@ public class Estudiantes extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         cantidaddenotas = new javax.swing.JTextField();
         ACTUALIZAR = new javax.swing.JToggleButton();
+        EditarNotas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -282,6 +284,14 @@ public class Estudiantes extends javax.swing.JFrame {
             }
         });
 
+        EditarNotas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        EditarNotas.setText("VER");
+        EditarNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditarNotasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -297,24 +307,26 @@ public class Estudiantes extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addComponent(Nombres, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(36, 36, 36)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cantidaddenotas)
-                            .addComponent(Notas, 0, 133, Short.MAX_VALUE))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(EditarNotas)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(cantidaddenotas)
+                                .addComponent(Notas, 0, 133, Short.MAX_VALUE)))
                         .addGap(79, 79, 79)
                         .addComponent(NotasIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(22, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Nombres, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58))))
+                        .addContainerGap(22, Short.MAX_VALUE))))
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(140, 140, 140)
+                .addGap(69, 69, 69)
                 .addComponent(guardarNotas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ACTUALIZAR)
-                .addGap(91, 91, 91))
+                .addGap(31, 31, 31))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,9 +347,11 @@ public class Estudiantes extends javax.swing.JFrame {
                     .addComponent(Notas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(NotasIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(guardarNotas)
-                    .addComponent(ACTUALIZAR))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(guardarNotas)
+                        .addComponent(ACTUALIZAR))
+                    .addComponent(EditarNotas))
                 .addContainerGap(7, Short.MAX_VALUE))
         );
 
@@ -453,6 +467,12 @@ public class Estudiantes extends javax.swing.JFrame {
         
     }//GEN-LAST:event_ACTUALIZARActionPerformed
 
+    private void EditarNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarNotasActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        this.notas.setVisible(true);
+    }//GEN-LAST:event_EditarNotasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -470,27 +490,29 @@ public class Estudiantes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Estudiantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cursos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Estudiantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cursos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Estudiantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cursos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Estudiantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cursos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             VentanaProfesor ventanaProfesor = new VentanaProfesor("ejepmlplo@gmail.com", "numeros");
             public void run() {
-                new Estudiantes("ejepmlplo@gmail.com","numeros", ventanaProfesor).setVisible(true);
+                new Cursos("ejepmlplo@gmail.com","numeros", ventanaProfesor).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton ACTUALIZAR;
+    private javax.swing.JButton EditarNotas;
     private javax.swing.JTextArea Estudiantes;
     private javax.swing.JTextArea Informacion;
     private javax.swing.JComboBox<String> Nombres;

@@ -20,6 +20,7 @@ public class Horario extends javax.swing.JFrame {
     public Horario(String email, String contraseña, VentanaProfesor ventanaProfesor) {
         initComponents();
         this.profesor = new Profesor(email,contraseña);
+        this.ventanaProfesor = ventanaProfesor;
         mostrarInformacionPersonal();
         mostrarInformacionHorario();
     }
@@ -218,7 +219,7 @@ public class Horario extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             VentanaProfesor ventanaProfesor = new VentanaProfesor("ejepmlplo@gmail.com", "numeros");
             public void run() {
-                new Estudiantes("ejepmlplo@gmail.com","numeros", ventanaProfesor).setVisible(true);
+                new Cursos("ejepmlplo@gmail.com","numeros", ventanaProfesor).setVisible(true);
             }
         });
     }
