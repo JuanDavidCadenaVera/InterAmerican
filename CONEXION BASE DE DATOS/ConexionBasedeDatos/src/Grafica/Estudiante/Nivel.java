@@ -6,18 +6,21 @@ package Grafica.Estudiante;
 
 import ucompensar.codigo.clases.Estudiante;
 
+
 /**
  *
  * @author JUAN DAVID
  */
 public class Nivel extends javax.swing.JFrame {
      private Estudiante estudiante;
+     private VentanaEstudiante ventanaAnterior;
     /**
      * Creates new form Nivel
      */
-    public Nivel(String email, String contraseña) {
+    public Nivel(String email, String contraseña, VentanaEstudiante ventanaAnterior) {
         initComponents();
         this.estudiante = new Estudiante(email,contraseña);
+        this.ventanaAnterior  = ventanaAnterior ;
         mostrarInformacionPersonal();
         mostrarInformacionNivel();
     }
@@ -46,6 +49,7 @@ public class Nivel extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Informacion = new javax.swing.JTextArea();
+        atras = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -67,12 +71,23 @@ public class Nivel extends javax.swing.JFrame {
         Informacion.setRows(5);
         jScrollPane1.setViewportView(Informacion);
 
+        atras.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        atras.setText("←");
+        atras.setBorder(null);
+        atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atrasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(91, 91, 91)
+                .addGap(8, 8, 8)
+                .addComponent(atras, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -84,9 +99,11 @@ public class Nivel extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(atras, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -160,6 +177,11 @@ public class Nivel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
+        this.dispose();
+        this.ventanaAnterior.setVisible(true);
+    }//GEN-LAST:event_atrasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -188,9 +210,10 @@ public class Nivel extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        VentanaEstudiante ventanaEstudiante = new VentanaEstudiante("ejepmlplo@gmail.com", "numeros");
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Nivel("" , "").setVisible(true);
+                new Nivel("" , "", ventanaEstudiante).setVisible(true);
             }
         });
     }
@@ -198,6 +221,7 @@ public class Nivel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Informacion;
     private javax.swing.JTextArea Nivel;
+    private javax.swing.JButton atras;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

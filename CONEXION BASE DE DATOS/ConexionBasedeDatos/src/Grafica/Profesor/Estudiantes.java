@@ -4,7 +4,17 @@
  */
 package Grafica.Profesor;
 
+import Grafica.Estudiante.Actualizacion;
+import Grafica.Estudiante.VentanaEstudiante;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import ucompensar.codigo.clases.Profesor;
+
 
 /**
  *
@@ -12,24 +22,87 @@ import ucompensar.codigo.clases.Profesor;
  */
 public class Estudiantes extends javax.swing.JFrame {
      private Profesor profesor;
+     private Actualizacion actualizacion;
+     private VentanaProfesor ventanaProfesor;
+      private String[] nombresEstudiantes;
+      private DefaultComboBoxModel<String> notasModel;
+      private Map<String, List<Double>> notasEstudiantes = new HashMap<>();
+      
     /**
      * Creates new form Horario
      */
-    public Estudiantes(String email, String contraseña) {
+    public Estudiantes(String email, String contraseña, VentanaProfesor ventanaProfesor) {
         initComponents();
         this.profesor = new Profesor(email,contraseña);
+        this.ventanaProfesor = ventanaProfesor;
+        this.actualizacion = new Actualizacion(email,contraseña);
         mostrarInformacionPersonal();
-        mostrarInformacionHorario();
+        this.nombresEstudiantes = profesor.obtenerNombresEstudiantes();
+        this.notasModel = new DefaultComboBoxModel<>();
+        mostrarInformacionEstudiantes();
+        cargarNombresEstudiantes();
+        cantidaddenotas.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            cantidaddenotasActionPerformed(e);
+        }
+        });
+        
+        NotasIngreso.addActionListener(new java.awt.event.ActionListener() {
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+        NotasIngresoActionPerformed(evt);
+        }
+        });
+        guardarNotas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                guardarNotasActionPerformed(e);
+            }
+        });
+        
+        cantidaddenotas.addActionListener(e -> cantidaddenotasActionPerformed(e));
+        
+        NotasIngreso.addActionListener(evt -> NotasIngresoActionPerformed(evt));
+        
+        guardarNotas.addActionListener(e -> guardarNotasActionPerformed(e));
+
     }
+    
+    public void setVentanaAnterior(VentanaEstudiante ventanaAnterior) {
+        this.ventanaProfesor = ventanaProfesor;
+    }
+    
     
     private void mostrarInformacionPersonal() {
         String informacionProfesor = this.profesor.Consultar();
         Informacion.setText(informacionProfesor);
     }
-     private void mostrarInformacionHorario() {
-        String informacionHorario = this.profesor.Estudiantes();
-        Estudiantes.setText(informacionHorario);
+     private void mostrarInformacionEstudiantes() {
+        String informacionEstudiantes = this.profesor.Estudiantes();
+        Estudiantes.setText(informacionEstudiantes);
+     }
+     
+      private void cargarNombresEstudiantes() {
+        DefaultComboBoxModel<String> nombresModel = new DefaultComboBoxModel<>(nombresEstudiantes);
+        Nombres.setModel(nombresModel);
     }
+
+   private void cargarNotas(int cantidad) {
+    String[] notas = new String[cantidad];
+    for (int i = 0; i < cantidad; i++) {
+        notas[i] = "Nota " + (i + 1);
+    }
+    notasModel.removeAllElements(); // Elimina todas las notas existentes
+    for (String nota : notas) {
+        notasModel.addElement(nota); // Agrega las nuevas notas al modelo
+    }
+    // Establecer el modelo de notas en el JComboBox
+    Notas.setModel(notasModel);
+    }
+   
+
+     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,10 +118,22 @@ public class Estudiantes extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Informacion = new javax.swing.JTextArea();
+        atras = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         Estudiantes = new javax.swing.JTextArea();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        Nombres = new javax.swing.JComboBox<>();
+        Notas = new javax.swing.JComboBox<>();
+        NotasIngreso = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        guardarNotas = new javax.swing.JToggleButton();
+        jLabel6 = new javax.swing.JLabel();
+        cantidaddenotas = new javax.swing.JTextField();
+        ACTUALIZAR = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,6 +151,16 @@ public class Estudiantes extends javax.swing.JFrame {
         Informacion.setRows(5);
         jScrollPane1.setViewportView(Informacion);
 
+        atras.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        atras.setText("←");
+        atras.setBorder(null);
+        atras.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atrasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -73,21 +168,25 @@ public class Estudiantes extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(atras, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel1)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(atras, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -107,12 +206,12 @@ public class Estudiantes extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(69, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(134, 134, 134))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -121,8 +220,125 @@ public class Estudiantes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel3.setText("NOTAS");
+
+        Nombres.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Nombres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NombresActionPerformed(evt);
+            }
+        });
+
+        Notas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Notas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NotasActionPerformed(evt);
+            }
+        });
+
+        NotasIngreso.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        NotasIngreso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NotasIngresoActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setText("Nombre:");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setText("Nota: ");
+
+        guardarNotas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        guardarNotas.setText("GUARDAR");
+        guardarNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardarNotasActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setText("Cantidad de Notas:");
+
+        cantidaddenotas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cantidaddenotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cantidaddenotasActionPerformed(evt);
+            }
+        });
+
+        ACTUALIZAR.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ACTUALIZAR.setText("ACTUALIZAR");
+        ACTUALIZAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ACTUALIZARActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(231, 231, 231))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(cantidaddenotas)
+                            .addComponent(Notas, 0, 133, Short.MAX_VALUE))
+                        .addGap(79, 79, 79)
+                        .addComponent(NotasIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(22, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Nombres, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58))))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(140, 140, 140)
+                .addComponent(guardarNotas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ACTUALIZAR)
+                .addGap(91, 91, 91))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addGap(23, 23, 23)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(Nombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(cantidaddenotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(Notas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(NotasIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(guardarNotas)
+                    .addComponent(ACTUALIZAR))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -132,25 +348,34 @@ public class Estudiantes extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 2, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,6 +384,74 @@ public class Estudiantes extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
+             this.dispose();
+            this.ventanaProfesor.setVisible(true);
+    }//GEN-LAST:event_atrasActionPerformed
+
+    private void NombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NombresActionPerformed
+
+    private void NotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NotasActionPerformed
+
+    private void cantidaddenotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidaddenotasActionPerformed
+        // TODO add your handling code here:
+        try {
+            int cantidad = Integer.parseInt(cantidaddenotas.getText());
+            cargarNotas(cantidad);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_cantidaddenotasActionPerformed
+
+    private void guardarNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarNotasActionPerformed
+        String nombreEstudiante = (String) Nombres.getSelectedItem();
+    String notaStr = NotasIngreso.getText().trim(); // Eliminar espacios en blanco
+    if (!notaStr.isEmpty()) {
+        try {
+            double nota = Double.parseDouble(notaStr);
+            profesor.ingresarNota(nombreEstudiante, nota);
+
+            // Actualizar la información mostrada
+            mostrarInformacionPersonal();
+
+            // Pasar al siguiente estudiante en la lista
+            int nextIndex = (Nombres.getSelectedIndex() + 1) % Nombres.getItemCount();
+            Nombres.setSelectedIndex(nextIndex);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese una nota válida.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "El campo de nota no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    }//GEN-LAST:event_guardarNotasActionPerformed
+
+    private void NotasIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotasIngresoActionPerformed
+       String nota = NotasIngreso.getText();
+
+        // Limpiar el campo de ingreso de notas
+        NotasIngreso.setText("");
+
+        // Obtener el índice de la próxima nota en el modelo de notas
+        int index = Notas.getSelectedIndex() + 1;
+
+        // Seleccionar la próxima nota en el JComboBox
+        if (index < Notas.getItemCount()) {
+            Notas.setSelectedIndex(index);
+        }
+    }//GEN-LAST:event_NotasIngresoActionPerformed
+
+    private void ACTUALIZARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ACTUALIZARActionPerformed
+        // TODO add your handling code here:
+        actualizacion.setVisible(true);
+        
+    }//GEN-LAST:event_ACTUALIZARActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,30 +479,36 @@ public class Estudiantes extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Estudiantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            VentanaProfesor ventanaProfesor = new VentanaProfesor("ejepmlplo@gmail.com", "numeros");
             public void run() {
-                new Estudiantes("ejepmlplo@gmail.com","numeros").setVisible(true);
+                new Estudiantes("ejepmlplo@gmail.com","numeros", ventanaProfesor).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton ACTUALIZAR;
     private javax.swing.JTextArea Estudiantes;
     private javax.swing.JTextArea Informacion;
+    private javax.swing.JComboBox<String> Nombres;
+    private javax.swing.JComboBox<String> Notas;
+    private javax.swing.JTextField NotasIngreso;
+    private javax.swing.JButton atras;
+    private javax.swing.JTextField cantidaddenotas;
+    private javax.swing.JToggleButton guardarNotas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables

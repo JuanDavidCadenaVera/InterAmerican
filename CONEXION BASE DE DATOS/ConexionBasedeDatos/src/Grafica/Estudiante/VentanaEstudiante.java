@@ -18,6 +18,7 @@ public class VentanaEstudiante extends javax.swing.JFrame {
         this.email = email;
         initComponents();
     }
+    
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -156,13 +157,14 @@ public class VentanaEstudiante extends javax.swing.JFrame {
 
     private void jButtonHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHorarioActionPerformed
         // TODO add your handling code here:
-        Horario horario = new Horario(email, contraseña);
+        Horario horario = new Horario(email, contraseña,this);
         horario.setVisible(true);
+        
     }//GEN-LAST:event_jButtonHorarioActionPerformed
 
     private void jButtonNivelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNivelActionPerformed
         // TODO add your handling code here:
-        Nivel nivel = new Nivel (email, contraseña);
+        Nivel nivel = new Nivel (email, contraseña, this);
         nivel.setVisible(true);
     }//GEN-LAST:event_jButtonNivelActionPerformed
 

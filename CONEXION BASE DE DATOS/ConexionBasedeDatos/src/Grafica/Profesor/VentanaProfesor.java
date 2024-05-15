@@ -152,13 +152,13 @@ public class VentanaProfesor extends javax.swing.JFrame {
 
     private void jButtonEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEstudiantesActionPerformed
         // TODO add your handling code here:
-        Estudiantes estudiantes = new Estudiantes (email, contraseña);
+        Estudiantes estudiantes = new Estudiantes (email, contraseña, this);
         estudiantes.setVisible(true);
     }//GEN-LAST:event_jButtonEstudiantesActionPerformed
 
     private void jButtonHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHorarioActionPerformed
         // TODO add your handling code here:
-        HorarioP horario = new HorarioP (email, contraseña);
+        Horario horario = new Horario (email, contraseña, this);
         horario.setVisible(true);
         
     }//GEN-LAST:event_jButtonHorarioActionPerformed

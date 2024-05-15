@@ -80,11 +80,14 @@ public class Estudiante extends Personas implements Horario, Nivel{
     public String horario() {
     StringBuilder sb = new StringBuilder();
     try {
-        String sql = "SELECT h.TbH_ID_Horario, h.TbH_Dia_Semana, h.TbH_Hora_Inicio, h.TbH_Hora_Final " +
+        String sql = "SELECT DISTINCT h.TbH_ID_Horario, h.TbH_Dia_Semana, h.TbH_Hora_Inicio, h.TbH_Hora_Final, " +
+                     "c.TbCo_ID_Curso, cn.TbCN_Nombre_Curso " +
                      "FROM tb_horario h " +
                      "JOIN tb_nivel_matricula nm ON h.TbH_ID_Horario = nm.TbNM_ID_Horario " +
+                     "JOIN tb_curso c ON nm.TbNM_ID_Curso = c.TbCo_ID_Curso " +
+                     "JOIN tb_curso_nombre cn ON c.TbCo_ID_Curso = cn.TbCN_ID_Curso " +
                      "JOIN tb_matricula m ON nm.TbNM_ID_Matricula = m.TbM_ID_Matricula " +
-                     "JOIN tb_personas p ON m.TbM_ID_Persona = p.TbP_ID_Personas " + // Added missing space before "JOIN"
+                     "JOIN tb_personas p ON m.TbM_ID_Persona = p.TbP_ID_Personas " +
                      "JOIN tb_usuarios u ON p.TbP_ID_Personas = u.TbU_ID_Contraseña " +
                      "WHERE u.TbU_Email = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -94,7 +97,9 @@ public class Estudiante extends Personas implements Horario, Nivel{
         while (rs.next()) {
             sb.append("Día de la Semana: ").append(rs.getString("TbH_Dia_Semana")).append("\n")
               .append("Hora Inicio Clase: ").append(rs.getTime("TbH_Hora_Inicio")).append("\n")
-              .append("Hora Finalizacion Clase: ").append(rs.getTime("TbH_Hora_Final")).append("\n\n");
+              .append("Hora Finalizacion Clase: ").append(rs.getTime("TbH_Hora_Final")).append("\n")
+              .append("ID del Curso: ").append(rs.getString("TbCo_ID_Curso")).append("\n")
+              .append("Nombre del Curso: ").append(rs.getString("TbCN_Nombre_Curso")).append("\n\n");
         }
         rs.close();
         stmt.close();

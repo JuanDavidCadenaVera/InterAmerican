@@ -17,7 +17,7 @@ import java.sql.SQLException;
 public class Conexion {
     private String bd ="ingles"; 
     private String url = "jdbc:mysql://localhost:3306/";
-    private String user = "localhost";
+    private String user = "ADMIN";
     private String password = "InterAmerican2024";
     private String driver = "com.mysql.cj.jdbc.Driver";
     private Connection conn ;
@@ -31,23 +31,13 @@ public class Conexion {
             }
             Class.forName(driver); 
             conn = DriverManager.getConnection(url + bd, user, password);
-            System.out.println("Se conectó correctamente a la base de datos " + bd);
+            System.out.println("");
         } catch (ClassNotFoundException | SQLException e) {
-            System.out.println("No se conectó correctamente a la base de datos " + bd + ": " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         return conn;
     }
 
-    public void desconectar() {
-        if (conn != null) {
-            try {
-                conn.close();
-                System.out.println("Se desconectó correctamente de la base de datos " + bd);
-            } catch (SQLException ex) {
-                System.out.println("No se desconectó la base de datos: " + bd + ": " + ex.getMessage());
-            }
-        }
-    }
 }
 
     
