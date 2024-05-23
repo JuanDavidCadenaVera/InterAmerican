@@ -10,6 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 /**
  *
@@ -18,7 +22,7 @@ import java.util.ArrayList;
 public class Profesor extends Personas implements CargaDocente,EstudiantesP{
     Conexion conexion = new Conexion();
     Connection conn = conexion.conectar();
-    
+    private Map<String, List<Double>> notasEstudiantes = new HashMap<>();
     private String tipoPersona = "TP-2";
 
     public Profesor(String email, String contraseña) {
@@ -228,8 +232,10 @@ public class Profesor extends Personas implements CargaDocente,EstudiantesP{
     }
     return nombres.toArray(new String[0]);
 }
+    
+   
 
-public void ingresarNota(String nombreEstudiante, double nota) {
+    /**public void ingresarNota(String nombreEstudiante, double nota) {
         PreparedStatement stmt = null;
         try {
             // Obtener el ID de matrícula del estudiante
@@ -258,7 +264,7 @@ public void ingresarNota(String nombreEstudiante, double nota) {
                 System.err.println("Error al cerrar recursos: " + ex.getMessage());
             }
         }
-    }
+    }**/
 
     private String obtenerIdMatricula(String nombreEstudiante) {
         String idMatricula = null;
@@ -387,55 +393,40 @@ public void ingresarNota(String nombreEstudiante, double nota) {
     return estudiantes.toString();
 }
     
-    public String EstudiantesNotas() {
-    StringBuilder estudiantesNotas = new StringBuilder();
-    ResultSet rs = null;
-    PreparedStatement stmt = null;
-    try {
-        String sql = "SELECT CONCAT(e.TbP_Nombre, ' ', e.TbP_Apellido) AS Nombre_Estudiante,\n" +
-            "c.TbCo_ID_Curso AS ID_Curso,\n" +
-            "n.TbN_ID_Nota AS Nota \n" +
-            "FROM tb_curso c \n" +
-            "INNER JOIN tb_contrato co ON c.TbCo_ID_Contrato = co.TbC_ID_Contrato \n" +
-            "INNER JOIN tb_matricula m ON c.TbCo_ID_Matricula = m.TbM_ID_Matricula \n" +
-            "INNER JOIN tb_personas e ON m.TbM_ID_Persona = e.TbP_ID_Personas \n" +
-            "INNER JOIN tb_personas p_profesor ON co.TbC_ID_Personas = p_profesor.TbP_ID_Personas \n" +
-            "LEFT JOIN tb_notas n ON m.TbM_ID_Matricula = n.TbN_ID_Matricula AND c.TbCo_ID_Curso = n.TbN_ID_Curso \n" +
-            "WHERE p_profesor.TbP_Direccion_Email = 'fabian13426@gmail.com'";
-
-        stmt = conn.prepareStatement(sql);
-        rs = stmt.executeQuery();
-
-        if (rs.next()) {
-            estudiantesNotas.append("Estudiantes y sus notas en los cursos del profesor:\n\n");
-            do {
-                String nombreEstudiante = rs.getString("Nombre_Estudiante");
-                String idCurso = rs.getString("ID_Curso");
-                String nota = rs.getString("Nota");
-
-                // Agrega la información al StringBuilder
-                estudiantesNotas.append("Nombre del Estudiante: ").append(nombreEstudiante).append("\n");
-                estudiantesNotas.append("ID del Curso: ").append(idCurso).append("\n");
-                estudiantesNotas.append("Nota: ").append(nota).append("\n\n");
-            } while (rs.next());
-        } else {
-            estudiantesNotas.append("No se encontraron estudiantes y sus notas en los cursos del profesor.");
-        }
-    } catch (SQLException e) {
-        System.err.println("Error al cargar estudiantes y sus notas en los cursos del profesor: " + e.getMessage());
-        estudiantesNotas.append("Error al consultar estudiantes y sus notas en los cursos del profesor: ").append(e.getMessage());
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
-        } catch (SQLException ex) {
-            System.err.println("Error al cerrar recursos: " + ex.getMessage());
-        }
+     public void ingresarNota(String nombreEstudiante, double nota) {
+        List<Double> notas = notasEstudiantes.getOrDefault(nombreEstudiante, new ArrayList<>());
+        notas.add(nota);
+        notasEstudiantes.put(nombreEstudiante, notas);
     }
+    
+    public String EstudiantesNotas() {
+        StringBuilder estudiantesNotas = new StringBuilder();
+        estudiantesNotas.append("Notas de los estudiantes:\n\n");
+
+    for (Map.Entry<String, List<Double>> entry : notasEstudiantes.entrySet()) {
+        String nombreEstudiante = entry.getKey();
+        List<Double> notas = entry.getValue();
+
+        estudiantesNotas.append("Nombre del estudiante: ").append(nombreEstudiante).append("\n");
+        estudiantesNotas.append("Notas: ");
+        
+        for (Double nota : notas) {
+            estudiantesNotas.append(nota).append(nota);
+        }
+        
+        estudiantesNotas.append("\n\n");
+    }
+
     return estudiantesNotas.toString();
-            
-        }    
-}
+    
+    }
+    
+   
+    }
+
+
+
+    
 
 
 

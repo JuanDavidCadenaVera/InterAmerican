@@ -1,0 +1,13 @@
+USUARIOS
+
+ESTUDIANTE:
+usuario: cadenaverajuandavid@gmail.com
+password: 1029141151
+
+PROFESOR: 
+usuario: fabian13426@gmail.com 
+password: 1033097397
+
+ADMINISTRATIVO:
+usuario: sdbc780@gmail.com
+password:1023162417
