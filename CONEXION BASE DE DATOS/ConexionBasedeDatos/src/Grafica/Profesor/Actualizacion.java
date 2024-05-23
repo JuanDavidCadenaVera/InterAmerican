@@ -21,13 +21,18 @@ public class Actualizacion extends javax.swing.JFrame {
         initComponents();
         this.profesor = new Profesor(email, contraseña);
         this.cursos = cursos;
-        mostrarInformacionPersonal();
+        setLocationRelativeTo(null);
     }
 
     
-     private void mostrarInformacionPersonal() {
-        String informacionProfesor = this.profesor.EstudiantesNotas();
-        Informacion.setText(informacionProfesor);
+     private void mostrarInformacion() {
+        String informacionEstudiantes = this.profesor.EstudiantesActualizados();
+        Informacion.setText(informacionEstudiantes);
+        Informacion.setCaretPosition(0);
+    }
+     
+     private void limpiarInformacion() {
+    Informacion.setText("");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,8 +47,8 @@ public class Actualizacion extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Informacion = new javax.swing.JTextArea();
-        atras = new javax.swing.JButton();
         atras1 = new javax.swing.JButton();
+        VER = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,14 +63,12 @@ public class Actualizacion extends javax.swing.JFrame {
         Informacion.setRows(5);
         jScrollPane1.setViewportView(Informacion);
 
-        atras.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
-        atras.setText("←");
-        atras.setBorder(null);
-        atras.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
         atras1.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         atras1.setText("←");
         atras1.setBorder(null);
+        atras1.setBorderPainted(false);
+        atras1.setContentAreaFilled(false);
+        atras1.setDefaultCapable(false);
         atras1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         atras1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,11 +90,6 @@ public class Actualizacion extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(atras)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,14 +99,17 @@ public class Actualizacion extends javax.swing.JFrame {
                     .addComponent(atras1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(atras)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
+
+        VER.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        VER.setText("VER INFORMACION");
+        VER.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VERActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,21 +118,34 @@ public class Actualizacion extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(307, 307, 307)
+                .addComponent(VER)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(VER)
+                .addGap(13, 13, 13))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void atras1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atras1ActionPerformed
+        limpiarInformacion();
         this.dispose();
         this.cursos.setVisible(true);
     }//GEN-LAST:event_atras1ActionPerformed
+
+    private void VERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VERActionPerformed
+        // TODO add your handling code here:
+        Informacion.setText("");
+        mostrarInformacion();
+    }//GEN-LAST:event_VERActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,7 +187,7 @@ public class Actualizacion extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Informacion;
-    private javax.swing.JButton atras;
+    private javax.swing.JButton VER;
     private javax.swing.JButton atras1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

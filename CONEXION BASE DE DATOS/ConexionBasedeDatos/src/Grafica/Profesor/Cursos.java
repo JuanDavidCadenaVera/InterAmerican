@@ -4,12 +4,6 @@
  */
 package Grafica.Profesor;
 
-import Grafica.Estudiante.VentanaEstudiante;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import ucompensar.codigo.clases.Profesor;
@@ -25,7 +19,6 @@ public class Cursos extends javax.swing.JFrame {
      private VentanaProfesor ventanaProfesor;
      private String[] nombresEstudiantes;
      private DefaultComboBoxModel<String> notasModel;
-     private Map<String, List<Double>> notasEstudiantes = new HashMap<>();
       
     /**
      * Creates new form Horario
@@ -42,19 +35,21 @@ public class Cursos extends javax.swing.JFrame {
         cargarNombresEstudiantes();
         agregarListeners();
         MotrarInfoNotas();
+        setLocationRelativeTo(null);
     }
    private void agregarListeners() {
-        cantidaddenotas.addActionListener(this::cantidaddenotasActionPerformed);
         NotasIngreso.addActionListener(this::NotasIngresoActionPerformed);
         guardarNotas.addActionListener(this::guardarNotasActionPerformed);
     }     
     private void mostrarInformacionPersonal() {
         String informacionProfesor = this.profesor.Consultar();
         Informacion.setText(informacionProfesor);
+        Informacion.setCaretPosition(0);
     }
     private void mostrarInformacionEstudiantes() {
         String informacionEstudiantes = this.profesor.Estudiantes();
         Estudiantes.setText(informacionEstudiantes);
+        Estudiantes.setCaretPosition(0);
      }
     private void cargarNombresEstudiantes() {
         DefaultComboBoxModel<String> nombresModel = new DefaultComboBoxModel<>(nombresEstudiantes);
@@ -66,18 +61,6 @@ public class Cursos extends javax.swing.JFrame {
         NotasInfo.setText (infoNotas);
     }
 
-   private void cargarNotas(int cantidad) {
-    String[] notas = new String[cantidad];
-    for (int i = 0; i < cantidad; i++) {
-        notas[i] = "Nota " + (i + 1);
-    }
-    notasModel.removeAllElements(); // Elimina todas las notas existentes
-    for (String nota : notas) {
-        notasModel.addElement(nota); // Agrega las nuevas notas al modelo
-    }
-    // Establecer el modelo de notas en el JComboBox
-    Notas.setModel(notasModel);
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,20 +78,18 @@ public class Cursos extends javax.swing.JFrame {
         atras = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         NotasInfo = new javax.swing.JTextArea();
+        SUBIR = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         Estudiantes = new javax.swing.JTextArea();
-        jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
         Nombres = new javax.swing.JComboBox<>();
-        Notas = new javax.swing.JComboBox<>();
         NotasIngreso = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         guardarNotas = new javax.swing.JToggleButton();
-        jLabel6 = new javax.swing.JLabel();
-        cantidaddenotas = new javax.swing.JTextField();
         ACTUALIZAR = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -130,6 +111,9 @@ public class Cursos extends javax.swing.JFrame {
         atras.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         atras.setText("←");
         atras.setBorder(null);
+        atras.setBorderPainted(false);
+        atras.setContentAreaFilled(false);
+        atras.setDefaultCapable(false);
         atras.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         atras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,25 +127,31 @@ public class Cursos extends javax.swing.JFrame {
         NotasInfo.setRows(5);
         jScrollPane3.setViewportView(NotasInfo);
 
+        SUBIR.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        SUBIR.setText("SUBIR");
+        SUBIR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SUBIRActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(atras, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(47, 47, 47)
-                                .addComponent(jLabel1)))
-                        .addGap(0, 22, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                        .addContainerGap()
+                        .addComponent(atras, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(195, 195, 195)
+                        .addComponent(SUBIR, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,8 +163,10 @@ public class Cursos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SUBIR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -189,6 +181,9 @@ public class Cursos extends javax.swing.JFrame {
         Estudiantes.setRows(5);
         jScrollPane2.setViewportView(Estudiantes);
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel3.setText("NOTAS");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -201,6 +196,10 @@ public class Cursos extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(189, 189, 189))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(270, 270, 270)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,26 +207,18 @@ public class Cursos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel3.setText("NOTAS");
 
         Nombres.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         Nombres.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NombresActionPerformed(evt);
-            }
-        });
-
-        Notas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        Notas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NotasActionPerformed(evt);
             }
         });
 
@@ -242,7 +233,7 @@ public class Cursos extends javax.swing.JFrame {
         jLabel4.setText("Nombre:");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel5.setText("Nota: ");
+        jLabel5.setText("Nota Final:");
 
         guardarNotas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         guardarNotas.setText("GUARDAR");
@@ -252,18 +243,8 @@ public class Cursos extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel6.setText("Cantidad de Notas:");
-
-        cantidaddenotas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        cantidaddenotas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cantidaddenotasActionPerformed(evt);
-            }
-        });
-
         ACTUALIZAR.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        ACTUALIZAR.setText("VER");
+        ACTUALIZAR.setText("VER ESTUDIANTES");
         ACTUALIZAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ACTUALIZARActionPerformed(evt);
@@ -275,59 +256,40 @@ public class Cursos extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                        .addComponent(Nombres, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cantidaddenotas)
-                            .addComponent(Notas, 0, 133, Short.MAX_VALUE))
-                        .addGap(79, 79, 79)
-                        .addComponent(NotasIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(231, 231, 231))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(guardarNotas)
-                        .addGap(48, 48, 48)
-                        .addComponent(ACTUALIZAR)
-                        .addGap(119, 119, 119))))
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(NotasIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(guardarNotas))
+                            .addComponent(Nombres, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(194, 194, 194)
+                        .addComponent(ACTUALIZAR)))
+                .addGap(58, 137, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addGap(23, 23, 23)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(Nombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(cantidaddenotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(Notas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(NotasIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(guardarNotas)
-                    .addComponent(ACTUALIZAR))
-                .addContainerGap(7, Short.MAX_VALUE))
+                    .addComponent(Nombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(ACTUALIZAR))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(NotasIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(guardarNotas)
+                        .addComponent(jLabel5)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -341,6 +303,7 @@ public class Cursos extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 100, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -355,7 +318,7 @@ public class Cursos extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -364,7 +327,7 @@ public class Cursos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -385,20 +348,6 @@ public class Cursos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_NombresActionPerformed
 
-    private void NotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NotasActionPerformed
-
-    private void cantidaddenotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidaddenotasActionPerformed
-        // TODO add your handling code here:
-        try {
-            int cantidad = Integer.parseInt(cantidaddenotas.getText());
-            cargarNotas(cantidad);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_cantidaddenotasActionPerformed
-
     private void guardarNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarNotasActionPerformed
         String nombreEstudiante = (String) Nombres.getSelectedItem();
         String notaStr = NotasIngreso.getText().trim(); // Eliminar espacios en blanco
@@ -412,20 +361,12 @@ public class Cursos extends javax.swing.JFrame {
         profesor.ingresarNota(nombreEstudiante, nota);
         MotrarInfoNotas();
         
-        
-        // Deshabilitar temporalmente el JComboBox
-        Nombres.setEnabled(false);
-        // Comprobar si se han ingresado todas las notas para el estudiante actual
     if (Nombres.getSelectedIndex() == Nombres.getItemCount() - 1) {
-            // Si es el último estudiante, pasar al primer estudiante
             Nombres.setSelectedIndex(0);
     } else {
-        // Si no, pasar al siguiente estudiante
         Nombres.setSelectedIndex(Nombres.getSelectedIndex() + 1);
     }
-        // Volver a habilitar el JComboBox
         Nombres.setEnabled(true);
-        // Limpiar el campo de nota
         NotasIngreso.setText("");
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(this, "Por favor ingrese una nota válida.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -433,25 +374,18 @@ public class Cursos extends javax.swing.JFrame {
     }//GEN-LAST:event_guardarNotasActionPerformed
 
     private void NotasIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotasIngresoActionPerformed
-       String nota = NotasIngreso.getText();
-
-        // Limpiar el campo de ingreso de notas
-        NotasIngreso.setText("");
-
-        // Obtener el índice de la próxima nota en el modelo de notas
-        int index = Notas.getSelectedIndex() + 1;
-
-        // Seleccionar la próxima nota en el JComboBox
-        if (index < Notas.getItemCount()) {
-            Notas.setSelectedIndex(index);
-        }
     }//GEN-LAST:event_NotasIngresoActionPerformed
 
     private void ACTUALIZARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ACTUALIZARActionPerformed
         // TODO add your handling code here:
         actualizacion.setVisible(true);
-        
     }//GEN-LAST:event_ACTUALIZARActionPerformed
+
+    private void SUBIRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SUBIRActionPerformed
+        // TODO add your handling code here:
+        profesor.actualizarNota();
+        JOptionPane.showMessageDialog(this, "La información se ha subido correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_SUBIRActionPerformed
 
     /**
      * @param args the command line arguments
@@ -484,6 +418,7 @@ public class Cursos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             VentanaProfesor ventanaProfesor = new VentanaProfesor("ejepmlplo@gmail.com", "numeros");
+            @Override
             public void run() {
                 new Cursos("ejepmlplo@gmail.com","numeros", ventanaProfesor).setVisible(true);
             }
@@ -495,18 +430,16 @@ public class Cursos extends javax.swing.JFrame {
     private javax.swing.JTextArea Estudiantes;
     private javax.swing.JTextArea Informacion;
     private javax.swing.JComboBox<String> Nombres;
-    private javax.swing.JComboBox<String> Notas;
     private javax.swing.JTextArea NotasInfo;
     private javax.swing.JTextField NotasIngreso;
+    private javax.swing.JButton SUBIR;
     private javax.swing.JButton atras;
-    private javax.swing.JTextField cantidaddenotas;
     private javax.swing.JToggleButton guardarNotas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

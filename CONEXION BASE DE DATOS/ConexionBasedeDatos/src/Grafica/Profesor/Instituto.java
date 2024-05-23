@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Grafica.Estudiante;
+package Grafica.Profesor;
 
 
 /**
@@ -10,13 +10,12 @@ package Grafica.Estudiante;
  * @author JUAN DAVID
  */
 public class Instituto extends javax.swing.JFrame {
-    private VentanaEstudiante estudiante;
-
+    private VentanaProfesor ventanaProfesor;
     /**
      * Creates new form Instituto
      */
-    public Instituto(VentanaEstudiante estudiante) {
-        this.estudiante = estudiante;
+    public Instituto(VentanaProfesor ventanaProfesor) {
+        this.ventanaProfesor = ventanaProfesor;
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -76,7 +75,7 @@ public class Instituto extends javax.swing.JFrame {
                         .addComponent(atras, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(78, 78, 78)
                         .addComponent(jLabel1)))
-                .addContainerGap(288, Short.MAX_VALUE))
+                .addContainerGap(294, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,9 +93,7 @@ public class Instituto extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,8 +105,7 @@ public class Instituto extends javax.swing.JFrame {
 
     private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
         this.dispose();
-        this.estudiante.setVisible(true);
-        
+        this.ventanaProfesor.setVisible(true);
     }//GEN-LAST:event_atrasActionPerformed
 
     
@@ -140,13 +136,14 @@ public class Instituto extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Instituto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                VentanaEstudiante estudiante = new VentanaEstudiante ("","");
-                new Instituto(estudiante).setVisible(true);
+                VentanaProfesor ventanaProfesor = new VentanaProfesor("ejepmlplo@gmail.com", "numeros");
+                new Instituto(ventanaProfesor).setVisible(true);
             }
         });
     }

@@ -17,6 +17,7 @@ public class VentanaProfesor extends javax.swing.JFrame {
     public VentanaProfesor(String email, String contraseña) {
         this.email = email;
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -33,7 +34,6 @@ public class VentanaProfesor extends javax.swing.JFrame {
         jButtonEstudiantes = new javax.swing.JButton();
         jButtonHorario = new javax.swing.JButton();
         jButtonInsituto = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jLabelFotoProfesor = new javax.swing.JLabel();
         jLabelProfesor = new javax.swing.JLabel();
         jLabelTexto = new javax.swing.JLabel();
@@ -62,10 +62,11 @@ public class VentanaProfesor extends javax.swing.JFrame {
 
         jButtonInsituto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Captura de pantalla 2024-05-09 173758.png"))); // NOI18N
         jButtonInsituto.setBorder(null);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("X");
+        jButtonInsituto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonInsitutoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -74,29 +75,22 @@ public class VentanaProfesor extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(94, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(19, 19, 19))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addComponent(jButtonEstudiantes)
-                            .addGap(79, 79, 79)))
+                    .addComponent(jButtonEstudiantes)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jButtonInsituto)
-                        .addComponent(jButtonHorario))))
+                        .addComponent(jButtonHorario)))
+                .addGap(74, 74, 74))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel1)
-                .addGap(25, 25, 25)
+                .addGap(71, 71, 71)
                 .addComponent(jButtonEstudiantes)
                 .addGap(50, 50, 50)
                 .addComponent(jButtonHorario)
                 .addGap(46, 46, 46)
                 .addComponent(jButtonInsituto)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         jLabelFotoProfesor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Captura de pantalla 2024-05-10 112737.png"))); // NOI18N
@@ -165,6 +159,13 @@ public class VentanaProfesor extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButtonHorarioActionPerformed
 
+    private void jButtonInsitutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInsitutoActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        Instituto instituto = new Instituto (this);
+        instituto.setVisible(true);
+    }//GEN-LAST:event_jButtonInsitutoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -204,7 +205,6 @@ public class VentanaProfesor extends javax.swing.JFrame {
     private javax.swing.JButton jButtonEstudiantes;
     private javax.swing.JButton jButtonHorario;
     private javax.swing.JButton jButtonInsituto;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelFotoProfesor;
     private javax.swing.JLabel jLabelProfesor;
     private javax.swing.JLabel jLabelTexto;

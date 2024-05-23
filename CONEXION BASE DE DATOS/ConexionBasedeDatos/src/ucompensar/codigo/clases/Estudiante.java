@@ -47,7 +47,7 @@ public class Estudiante extends Personas implements Horario, Nivel{
                      "WHERE p.TbP_Direccion_Email = ?";
 
         stmt = conn.prepareStatement(sql);
-        stmt.setString(1, getEmail());  // Asegúrate de que getEmail() devuelve el email correcto
+        stmt.setString(1, getEmail()); 
         rs = stmt.executeQuery();
 
         if (rs.next()) {
@@ -112,15 +112,16 @@ public class Estudiante extends Personas implements Horario, Nivel{
 
     @Override
     public String nivel() {
-         StringBuilder sb = new StringBuilder();
+    StringBuilder sb = new StringBuilder();
     try {
-        String sql = "SELECT n.TbN_ID_Nivel, n.TbN_Duracion_Horas " +
-                        "FROM tb_nivel n " +
-                         "JOIN tb_nivel_matricula nm ON n.TbN_ID_Nivel = nm.TbNM_ID_Nivel " +
-                         "JOIN tb_matricula m ON nm.TbNM_ID_Matricula = m.TbM_ID_Matricula " +
-                         "JOIN tb_personas p ON m.TbM_ID_Persona = p.TbP_ID_Personas " +
-                         "JOIN tb_usuarios u ON p.TbP_ID_Personas = u.TbU_ID_Contraseña " +
-                         "WHERE u.TbU_Email = ?";
+        String sql = "SELECT n.TbN_ID_Nivel, n.TbN_Duracion_Horas, no.TbN_ID_Nota " +
+                     "FROM tb_nivel n " +
+                     "JOIN tb_nivel_matricula nm ON n.TbN_ID_Nivel = nm.TbNM_ID_Nivel " +
+                     "JOIN tb_matricula m ON nm.TbNM_ID_Matricula = m.TbM_ID_Matricula " +
+                     "JOIN tb_personas p ON m.TbM_ID_Persona = p.TbP_ID_Personas " +
+                     "JOIN tb_usuarios u ON p.TbP_ID_Personas = u.TbU_ID_Contraseña " +
+                     "JOIN tb_notas no ON m.TbM_ID_Matricula = no.TbN_ID_Matricula " +
+                     "WHERE u.TbU_Email = ?";
 
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, getEmail());
@@ -129,9 +130,11 @@ public class Estudiante extends Personas implements Horario, Nivel{
         if (rs.next()) {
             String nivelID = rs.getString("TbN_ID_Nivel");
             String duracionHoras = rs.getString("TbN_Duracion_Horas");
+            float nota = rs.getFloat("TbN_ID_Nota");
 
             sb.append("Nivel: ").append(nivelID).append("\n")
-              .append("Duración: ").append(duracionHoras).append("\n");
+              .append("Duración: ").append(duracionHoras).append("\n")
+              .append("Nota: ").append(nota).append("\n");
         } else {
             sb.append("No se encontraron datos de nivel para el ID de estudiante: ").append(getIdentificacion()).append("\n");
         }
@@ -144,5 +147,4 @@ public class Estudiante extends Personas implements Horario, Nivel{
     }
     return sb.toString();
 }
-    
 }

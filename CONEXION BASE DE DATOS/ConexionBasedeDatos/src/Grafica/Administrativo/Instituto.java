@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Grafica.Estudiante;
+package Grafica.Administrativo;
 
 
 /**
@@ -10,15 +10,12 @@ package Grafica.Estudiante;
  * @author JUAN DAVID
  */
 public class Instituto extends javax.swing.JFrame {
-    private VentanaEstudiante estudiante;
 
     /**
      * Creates new form Instituto
      */
-    public Instituto(VentanaEstudiante estudiante) {
-        this.estudiante = estudiante;
+    public Instituto() {
         initComponents();
-        setLocationRelativeTo(null);
     }
 
     /**
@@ -107,8 +104,7 @@ public class Instituto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
-        this.dispose();
-        this.estudiante.setVisible(true);
+        
         
     }//GEN-LAST:event_atrasActionPerformed
 
@@ -145,8 +141,7 @@ public class Instituto extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                VentanaEstudiante estudiante = new VentanaEstudiante ("","");
-                new Instituto(estudiante).setVisible(true);
+                new Instituto().setVisible(true);
             }
         });
     }

@@ -21,6 +21,7 @@ public class Horario extends javax.swing.JFrame {
         this.ventanaAnterior  = ventanaAnterior ;
         mostrarInformacionPersonal();
         mostrarInformacionHorario();
+        setLocationRelativeTo(null);
     }
     
     public void setVentanaAnterior(VentanaEstudiante ventanaAnterior) {
@@ -76,6 +77,9 @@ public class Horario extends javax.swing.JFrame {
         atras.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         atras.setText("←");
         atras.setBorder(null);
+        atras.setBorderPainted(false);
+        atras.setContentAreaFilled(false);
+        atras.setDefaultCapable(false);
         atras.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         atras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

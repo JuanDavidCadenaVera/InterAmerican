@@ -52,7 +52,7 @@ public class Profesor extends Personas implements CargaDocente,EstudiantesP{
                      "WHERE p.TbP_Direccion_Email = ?";
 
         stmt = conn.prepareStatement(sql);
-        stmt.setString(1, getEmail());  // Asegúrate de que getEmail() devuelve el email correcto
+        stmt.setString(1, getEmail());  
         rs = stmt.executeQuery();
 
         if (rs.next()) {
@@ -100,7 +100,7 @@ public class Profesor extends Personas implements CargaDocente,EstudiantesP{
              "WHERE " +
              "p.TbP_Direccion_Email = ?";
         stmt = conn.prepareStatement(sql);
-        stmt.setString(1, getEmail()); // Asegúrate de que getEmail() devuelve el email correcto
+        stmt.setString(1, getEmail()); 
         rs = stmt.executeQuery();
 
         if (rs.next()) {
@@ -157,7 +157,7 @@ public class Profesor extends Personas implements CargaDocente,EstudiantesP{
                      "p_profesor.TbP_Direccion_Email = ?";
 
         stmt = conn.prepareStatement(sql);
-        stmt.setString(1, getEmail()); // Reemplaza getEmail() con el correo electrónico del profesor
+        stmt.setString(1, getEmail()); 
 
         rs = stmt.executeQuery();
 
@@ -173,7 +173,6 @@ public class Profesor extends Personas implements CargaDocente,EstudiantesP{
                 String idContrato = rs.getString("ID_Contrato");
                 String nombreProfesor = rs.getString("Nombre_Profesor");
                 
-                // Agrega la información al StringBuilder
                 estudiantes.append("ID del Curso: ").append(idCurso).append("\n");
                 estudiantes.append("Nombre del Estudiante: ").append(nombreEstudiante).append("\n");
                 estudiantes.append("ID del Nivel: ").append(idNivel).append("\n");
@@ -200,7 +199,6 @@ public class Profesor extends Personas implements CargaDocente,EstudiantesP{
     return estudiantes.toString();
 }
    
-    
     public String[] obtenerNombresEstudiantes() {
     ArrayList<String> nombres = new ArrayList<>();
     ResultSet rs = null;
@@ -215,7 +213,7 @@ public class Profesor extends Personas implements CargaDocente,EstudiantesP{
                      "INNER JOIN tb_horario h ON c.TbCo_ID_Horario = h.TbH_ID_Horario " +
                      "WHERE p_profesor.TbP_Direccion_Email = ?";
         stmt = conn.prepareStatement(sql);
-        stmt.setString(1, getEmail()); // Reemplaza getEmail() con el correo electrónico del profesor
+        stmt.setString(1, getEmail()); 
         rs = stmt.executeQuery();
         while (rs.next()) {
             nombres.add(rs.getString("Nombre_Estudiante"));
@@ -233,202 +231,165 @@ public class Profesor extends Personas implements CargaDocente,EstudiantesP{
     return nombres.toArray(new String[0]);
 }
     
-   
-
-    /**public void ingresarNota(String nombreEstudiante, double nota) {
-        PreparedStatement stmt = null;
-        try {
-            // Obtener el ID de matrícula del estudiante
-            String idMatricula = obtenerIdMatricula(nombreEstudiante);
-
-            // Obtener un ID de curso válido
-            String idCurso = obtenerIdCursoValido();
-
-            // Consulta SQL para insertar la nota
-            String sql = "INSERT INTO tb_notas (TbN_ID_Nota, TbN_ID_Curso, TbN_ID_Matricula) VALUES (?, ?, ?)";
-            stmt = conn.prepareStatement(sql);
-            stmt.setDouble(1, nota);
-            stmt.setString(2, idCurso);
-            stmt.setString(3, idMatricula);
-
-            // Ejecutar la consulta
-            stmt.executeUpdate();
-
-            System.out.println("Nota ingresada correctamente para " + nombreEstudiante);
-        } catch (SQLException e) {
-            System.err.println("Error al ingresar la nota: " + e.getMessage());
-        } finally {
-            try {
-                if (stmt != null) stmt.close();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar recursos: " + ex.getMessage());
-            }
-        }
-    }**/
-
-    private String obtenerIdMatricula(String nombreEstudiante) {
-        String idMatricula = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        try {
-            // Consulta para obtener el ID de matrícula basado en el nombre del estudiante
-            String sql = "SELECT TbM_ID_Matricula FROM tb_matricula " +
-                         "JOIN tb_personas ON tb_matricula.TbM_ID_Persona = tb_personas.TbP_ID_Personas " +
-                         "WHERE tb_personas.TbP_Nombre = ?";
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, nombreEstudiante);
-            rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                idMatricula = rs.getString("TbM_ID_Matricula");
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al obtener el ID de matrícula: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar recursos: " + ex.getMessage());
-            }
-        }
-        return idMatricula;
-    }
-
-    private String obtenerIdCursoValido() {
-        String idCurso = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        try {
-            // Consulta para obtener un ID de curso válido
-            String sql = "SELECT TbCo_ID_Curso FROM tb_curso LIMIT 1";
-            stmt = conn.prepareStatement(sql);
-            rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                idCurso = rs.getString("TbCo_ID_Curso");
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al obtener el ID del curso: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar recursos: " + ex.getMessage());
-            }
-        }
-        return idCurso;
-    }
-
-    public String EstudiantesActualizados() {
-    StringBuilder estudiantes = new StringBuilder();
-    ResultSet rs = null;
-    PreparedStatement stmt = null;
-    try {
-        String sql = "SELECT\n" +
-        "c.TbCo_ID_Curso AS ID_Curso,\n" +
-        "CONCAT(e.TbP_Nombre, ' ', e.TbP_Apellido) AS Nombre_Estudiante,\n" +
-        "c.TbCo_ID_Nivel AS ID_Nivel,\n" +
-        "h.TbH_Dia_Semana AS Dia_Semana,\n" +
-        "TIME_FORMAT(h.TbH_Hora_Inicio, '%H:%i') AS Hora_Inicio,\n" +
-        "TIME_FORMAT(h.TbH_Hora_Final, '%H:%i') AS Hora_Final,\n" +
-        "c.TbCo_ID_Contrato AS ID_Contrato,\n" +
-        "CONCAT(p_profesor.TbP_Nombre, ' ', p_profesor.TbP_Apellido) AS Nombre_Profesor,\n" +
-        "n.TbN_ID_Nota AS Nota\n" +
-        "FROM\n" +
-        "tb_curso c\n" +
-        "INNER JOIN tb_contrato co ON c.TbCo_ID_Contrato = co.TbC_ID_Contrato\n" +
-        "INNER JOIN tb_matricula m ON c.TbCo_ID_Matricula = m.TbM_ID_Matricula\n" +
-        "INNER JOIN tb_personas e ON m.TbM_ID_Persona = e.TbP_ID_Personas\n" +
-        "INNER JOIN tb_personas p_profesor ON co.TbC_ID_Personas = p_profesor.TbP_ID_Personas\n" +
-        "INNER JOIN tb_horario h ON c.TbCo_ID_Horario = h.TbH_ID_Horario\n" +
-        "LEFT JOIN tb_notas n ON m.TbM_ID_Matricula = n.TbN_ID_Matricula AND c.TbCo_ID_Curso = n.TbN_ID_Curso\n" +
-        "WHERE\n" +
-        "p_profesor.TbP_Direccion_Email = ?;";
-
-        stmt = conn.prepareStatement(sql);
-        stmt.setString(1, getEmail()); // Reemplaza getEmail() con el correo electrónico del profesor
-
-        rs = stmt.executeQuery();
-
-        if (rs.next()) {
-            estudiantes.append("Estudiantes inscritos en los cursos del profesor:\n\n");
-            do {
-                String idCurso = rs.getString("ID_Curso");
-                String nombreEstudiante = rs.getString("Nombre_Estudiante");
-                String idNivel = rs.getString("ID_Nivel");
-                String diaSemana = rs.getString("Dia_Semana");
-                String horaInicio = rs.getString("Hora_Inicio");
-                String horaFinal = rs.getString("Hora_Final");
-                String idContrato = rs.getString("ID_Contrato");
-                String nombreProfesor = rs.getString("Nombre_Profesor");
-                String nota = rs.getString("Nota");
-                
-                // Agrega la información al StringBuilder
-                estudiantes.append("ID del Curso: ").append(idCurso).append("\n");
-                estudiantes.append("Nombre del Estudiante: ").append(nombreEstudiante).append("\n");
-                estudiantes.append("ID del Nivel: ").append(idNivel).append("\n");
-                estudiantes.append("Día de la semana: ").append(diaSemana).append("\n");
-                estudiantes.append("Hora de inicio: ").append(horaInicio).append("\n");
-                estudiantes.append("Hora final: ").append(horaFinal).append("\n");
-                estudiantes.append("ID del Contrato: ").append(idContrato).append("\n");
-                estudiantes.append("Nombre del Profesor: ").append(nombreProfesor).append("\n");
-                estudiantes.append("Nota: ").append(nota).append("\n\n");
-            } while (rs.next());
-        } else {
-            estudiantes.append("No se encontraron estudiantes inscritos en los cursos del profesor.");
-        }
-    } catch (SQLException e) {
-        System.err.println("Error al cargar estudiantes inscritos en los cursos del profesor: " + e.getMessage());
-        estudiantes.append("Error al consultar estudiantes inscritos en los cursos del profesor: ").append(e.getMessage());
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
-        } catch (SQLException ex) {
-            System.err.println("Error al cerrar recursos: " + ex.getMessage());
-        }
-    }
-    return estudiantes.toString();
-}
-    
-     public void ingresarNota(String nombreEstudiante, double nota) {
+    public void ingresarNota(String nombreEstudiante, double nota) {
         List<Double> notas = notasEstudiantes.getOrDefault(nombreEstudiante, new ArrayList<>());
         notas.add(nota);
         notasEstudiantes.put(nombreEstudiante, notas);
     }
     
     public String EstudiantesNotas() {
-        StringBuilder estudiantesNotas = new StringBuilder();
-        estudiantesNotas.append("Notas de los estudiantes:\n\n");
+    StringBuilder estudiantesNotas = new StringBuilder();
+    estudiantesNotas.append("Notas de los estudiantes:\n\n");
 
     for (Map.Entry<String, List<Double>> entry : notasEstudiantes.entrySet()) {
         String nombreEstudiante = entry.getKey();
         List<Double> notas = entry.getValue();
 
-        estudiantesNotas.append("Nombre del estudiante: ").append(nombreEstudiante).append("\n");
-        estudiantesNotas.append("Notas: ");
-        
         for (Double nota : notas) {
-            estudiantesNotas.append(nota).append(nota);
+            estudiantesNotas.append("Nombre: ").append(nombreEstudiante).append("\n");
+            estudiantesNotas.append("Nota: ").append(nota).append("\n\n");
         }
-        
-        estudiantesNotas.append("\n\n");
     }
 
     return estudiantesNotas.toString();
+}
+
     
+    public Map<String, Map<String, String>> ids() {
+    Map<String, Map<String, String>> idsEstudiantes = new HashMap<>();
+    for (Map.Entry<String, List<Double>> entry : notasEstudiantes.entrySet()) {
+        String nombreEstudiante = entry.getKey();
+        Map<String, String> ids = new HashMap<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            String[] nombres = nombreEstudiante.split(" ");
+            if (nombres.length < 2) {
+                System.out.println("El nombre debe contener al menos un nombre y un apellido.");
+                continue;
+            }
+            String nombre = nombres[0];
+            String apellido = nombres[1];
+            
+            String sqlPersona = "SELECT TbP_ID_Personas FROM tb_personas WHERE TbP_Nombre = ? AND TbP_Apellido = ?";
+            stmt = conn.prepareStatement(sqlPersona);
+            stmt.setString(1, nombre);
+            stmt.setString(2, apellido);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                ids.put("idPersona", rs.getString("TbP_ID_Personas"));
+            } else {
+                System.out.println("No se encontró la persona con nombre y apellido: " + nombreEstudiante);
+                continue;
+            }
+
+            String sqlMatricula = "SELECT TbM_ID_Matricula FROM tb_matricula WHERE TbM_ID_Persona = ?";
+            stmt = conn.prepareStatement(sqlMatricula);
+            stmt.setString(1, ids.get("idPersona"));
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                ids.put("idMatricula", rs.getString("TbM_ID_Matricula"));
+            } else {
+                System.out.println("No se encontró la matrícula para la persona con nombre y apellido: " + nombreEstudiante);
+                continue;
+            }
+
+            String sqlCurso = "SELECT TbCo_ID_Curso FROM tb_curso WHERE TbCo_ID_Matricula = ?";
+            stmt = conn.prepareStatement(sqlCurso);
+            stmt.setString(1, ids.get("idMatricula"));
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                ids.put("idCurso", rs.getString("TbCo_ID_Curso"));
+            } else {
+                System.out.println("No se encontró el curso para la matrícula de la persona con nombre y apellido: " + nombreEstudiante);
+            }
+            idsEstudiantes.put(nombreEstudiante, ids);
+        } catch (SQLException e) {
+            System.out.println("Error al obtener los IDs para la persona con nombre y apellido " + nombreEstudiante + ": " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar recursos: " + ex.getMessage());
+            }
+        }
+    }
+    return idsEstudiantes;
+}
+    
+    public void actualizarNota() {
+    for (Map.Entry<String, List<Double>> entry : notasEstudiantes.entrySet()) {
+        String nombreEstudiante = entry.getKey();
+        List<Double> notas = entry.getValue();
+
+        Map<String, String> ids = ids().get(nombreEstudiante);
+
+        if (ids == null || ids.get("idMatricula") == null || ids.get("idCurso") == null) {
+            System.out.println("No se pudo obtener la matrícula o el curso para " + nombreEstudiante);
+            continue; 
+        }
+
+        for (Double nota : notas) {
+            String query = "UPDATE tb_notas SET TbN_ID_Nota = ? WHERE TbN_ID_Matricula = ? AND TbN_ID_Curso = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setDouble(1, nota);
+                pstmt.setString(2, ids.get("idMatricula"));
+                pstmt.setString(3, ids.get("idCurso"));
+
+                int affectedRows = pstmt.executeUpdate();
+                if (affectedRows > 0) {
+                    System.out.println("Nota actualizada correctamente para " + nombreEstudiante);
+                } else {
+                    System.out.println("No se encontró una nota para actualizar para " + nombreEstudiante);
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al actualizar la nota para " + nombreEstudiante + ": " + e.getMessage());
+                }
+            }
+        }
     }
     
-   
+    public String EstudiantesActualizados() {
+    StringBuilder estudiantes = new StringBuilder();
+    ResultSet rs;
+    PreparedStatement stmt;
+    try {
+        String sql = "SELECT\n" +
+                "CONCAT(e.TbP_Nombre, ' ', e.TbP_Apellido) AS Nombre_Estudiante,\n" +
+                "n.TbN_ID_Nota AS Nota\n" +
+                "FROM\n" +
+                "tb_curso c\n" +
+                "INNER JOIN tb_contrato co ON c.TbCo_ID_Contrato = co.TbC_ID_Contrato\n" +
+                "INNER JOIN tb_matricula m ON c.TbCo_ID_Matricula = m.TbM_ID_Matricula\n" +
+                "INNER JOIN tb_personas e ON m.TbM_ID_Persona = e.TbP_ID_Personas\n" +
+                "INNER JOIN tb_personas p_profesor ON co.TbC_ID_Personas = p_profesor.TbP_ID_Personas\n" +
+                "LEFT JOIN tb_notas n ON m.TbM_ID_Matricula = n.TbN_ID_Matricula AND c.TbCo_ID_Curso = n.TbN_ID_Curso\n" +
+                "WHERE\n" +
+                "p_profesor.TbP_Direccion_Email = ?;";
+
+        stmt = conn.prepareStatement(sql);
+        stmt.setString(1, getEmail());
+
+        rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            estudiantes.append("Estudiantes inscritos en los cursos del profesor:\n\n");
+            do {
+                String nombreEstudiante = rs.getString("Nombre_Estudiante");
+                String nota = rs.getString("Nota");
+                
+                estudiantes.append("Nombre del Estudiante: ").append(nombreEstudiante).append("\n");
+                estudiantes.append("Nota: ").append(nota).append("\n\n");
+            } while (rs.next());
+        } else {
+            estudiantes.append("No se encontraron estudiantes inscritos en los cursos del profesor.");
+        }
+    } catch (SQLException e) {
+        }
+    return estudiantes.toString();
     }
-
-
-
-    
-
-
-
-
-
+}
