@@ -18,19 +18,9 @@ public class Estudiante extends Personas implements Horario, Nivel{
     Conexion conexion = new Conexion();
     Connection conn = conexion.conectar();
     
-    private String tipoPersona = "TP-1";
 
     public Estudiante(String email, String contraseña) {
         super(email, contraseña);
-    }
-
-
-    public String getTipoPersona() {
-        return tipoPersona;
-    }
-
-    public void setTipoPersona(String tipoPersona) {
-        this.tipoPersona = tipoPersona;
     }
 
     @Override

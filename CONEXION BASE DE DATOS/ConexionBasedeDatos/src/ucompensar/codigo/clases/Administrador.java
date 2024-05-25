@@ -10,20 +10,9 @@ package ucompensar.codigo.clases;
  * @author 52130424
  */
 public class Administrador extends Personas {
-    private String tipoPersona = "TP-3";
 
     public Administrador(String email, String contraseña) {
         super(email, null);
-    }
-
-    
-
-    public String getTipoPersona() {
-        return tipoPersona;
-    }
-
-    public void setTipoPersona(String tipoPersona) {
-        this.tipoPersona = tipoPersona;
     }
 
     @Override

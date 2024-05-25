@@ -23,19 +23,9 @@ public class Profesor extends Personas implements CargaDocente,EstudiantesP{
     Conexion conexion = new Conexion();
     Connection conn = conexion.conectar();
     private Map<String, List<Double>> notasEstudiantes = new HashMap<>();
-    private String tipoPersona = "TP-2";
 
     public Profesor(String email, String contraseña) {
         super(email, contraseña);
-    }
-
-
-    public String getTipoPersona() {
-        return tipoPersona;
-    }
-
-    public void setTipoPersona(String tipoPersona) {
-        this.tipoPersona = tipoPersona;
     }
 
     @Override
