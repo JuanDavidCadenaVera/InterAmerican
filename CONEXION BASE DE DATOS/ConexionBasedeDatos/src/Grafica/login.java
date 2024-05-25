@@ -203,17 +203,15 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void InicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioSesionActionPerformed
-    // Obtiene el usuario y la contraseña directamente desde los campos de texto
     String username = txtusername.getText().trim();
     String password = new String(txtpassword.getPassword());
 
-    // Crea una instancia de Usuario y verifica las credenciales utilizando los atributos internos
     Usuario usuario = new Usuario(username, password);
-    String tipoUsuario = usuario.verificarCredenciales();  // Ahora sin parámetros
+    String tipoUsuario = usuario.verificarCredenciales();  
 
-    // Evalúa el tipo de usuario y muestra la ventana correspondiente
+    
     if (tipoUsuario != null) {
-        switch (tipoUsuario.toLowerCase()) {  // Modificado para manejar mayúsculas/minúsculas
+        switch (tipoUsuario.toLowerCase()) {  
             case "profesor" -> {
                 VentanaProfesor ventanaProfesor = new VentanaProfesor(username, password);
                 ventanaProfesor.setVisible(true);
@@ -223,10 +221,10 @@ public class login extends javax.swing.JFrame {
                 ventanaEstudiante.setVisible(true);
             }
             case "administrador" -> {
-                VentanaAdministrativo ventanaAdministrador = new VentanaAdministrativo();
+                VentanaAdministrativo ventanaAdministrador = new VentanaAdministrativo(username, password);
                 ventanaAdministrador.setVisible(true);
             }
-            default -> JOptionPane.showMessageDialog(this, "Tipo de usuario desconocido: " + tipoUsuario);  // Modificado para mostrar el tipo desconocido
+            default -> JOptionPane.showMessageDialog(this, "Tipo de usuario desconocido: " + tipoUsuario); 
         }
         // Modificado para manejar mayúsculas/minúsculas
         // Cerrar la ventana de inicio de sesión después de iniciar sesión exitosamente

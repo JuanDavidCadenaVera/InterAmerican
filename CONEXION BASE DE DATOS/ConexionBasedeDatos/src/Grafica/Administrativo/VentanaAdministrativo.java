@@ -9,12 +9,15 @@ package Grafica.Administrativo;
  * @author JUAN DAVID
  */
 public class VentanaAdministrativo extends javax.swing.JFrame {
+        private String email, contraseña;
 
     /**
      * Creates new form VentanaAdministrativo
      */
-    public VentanaAdministrativo() {
+    public VentanaAdministrativo(String email, String contraseña) {
+        this.email = email;
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -150,10 +153,16 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
 
     private void jButtonEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEstudianteActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        EstudianteA estudiante = new EstudianteA (email,contraseña);
+        estudiante.setVisible(true);
     }//GEN-LAST:event_jButtonEstudianteActionPerformed
 
     private void jButtonProfesoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProfesoresActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        ProfesorA profesor = new ProfesorA (email, contraseña);
+        profesor.setVisible(true);
     }//GEN-LAST:event_jButtonProfesoresActionPerformed
 
     private void jButtonInstitutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInstitutoActionPerformed
@@ -189,8 +198,9 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new VentanaAdministrativo().setVisible(true);
+                new VentanaAdministrativo("","").setVisible(true);
             }
         });
     }

@@ -25,9 +25,9 @@ public class Estudiante extends Personas implements Horario, Nivel{
 
     @Override
     public String Consultar() {
-         StringBuilder datosEstudiante = new StringBuilder();
-    ResultSet rs = null;
-    PreparedStatement stmt = null;
+        StringBuilder datosEstudiante = new StringBuilder();
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
     try {
         String sql = "SELECT p.TbP_Nombre, p.TbP_Apellido, p.TbP_Tipo_Documento, p.TbP_ID_Personas, " +
                      "p.TbP_Direccion_Email, p.TbP_Direccion, p.TbP_Fecha_Nacimiento, tp.TbTP_Tipo_Persona " +

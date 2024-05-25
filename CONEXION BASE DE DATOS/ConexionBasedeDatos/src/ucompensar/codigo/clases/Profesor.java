@@ -30,9 +30,9 @@ public class Profesor extends Personas implements CargaDocente,EstudiantesP{
 
     @Override
     public String Consultar() {
-         StringBuilder datosProfesor = new StringBuilder();
-    ResultSet rs = null;
-    PreparedStatement stmt = null;
+        StringBuilder datosProfesor = new StringBuilder();
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
     try {
         String sql = "SELECT p.TbP_Nombre, p.TbP_Apellido, p.TbP_Tipo_Documento, p.TbP_ID_Personas, " +
                      "p.TbP_Direccion_Email, p.TbP_Direccion, p.TbP_Fecha_Nacimiento, tp.TbTP_Tipo_Persona " +
@@ -75,8 +75,8 @@ public class Profesor extends Personas implements CargaDocente,EstudiantesP{
     @Override
     public String carga() {
         StringBuilder cargaLaboral = new StringBuilder();
-    ResultSet rs = null;
-    PreparedStatement stmt = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
     try {
         String sql = "SELECT " +
              "cd.TbCD_Horas_Trabajadas AS horas_trabajadas, " +
@@ -118,9 +118,9 @@ public class Profesor extends Personas implements CargaDocente,EstudiantesP{
 
     @Override
     public String Estudiantes() {
-    StringBuilder estudiantes = new StringBuilder();
-    ResultSet rs = null;
-    PreparedStatement stmt = null;
+        StringBuilder estudiantes = new StringBuilder();
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
     try {
         String sql = "SELECT " +
                      "c.TbCo_ID_Curso AS ID_Curso, " +

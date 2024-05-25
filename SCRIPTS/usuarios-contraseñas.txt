@@ -10,4 +10,4 @@ password: 1033097397
 
 ADMINISTRATIVO:
 usuario: sdbc780@gmail.com
-password:1023162417
+password: 1023162417
