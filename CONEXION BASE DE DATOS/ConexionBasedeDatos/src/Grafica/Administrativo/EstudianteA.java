@@ -4,8 +4,8 @@
  */
 package Grafica.Administrativo;
 
-import Grafica.Datos.verInformacion.VerEstudiante;
 import Grafica.Datos.Ingresar;
+import Grafica.Datos.Ver;
 import ucompensar.codigo.clases.Administrador;
 
 /**
@@ -20,6 +20,8 @@ public class EstudianteA extends javax.swing.JFrame {
      * Creates new form Horario
      */
     public EstudianteA(String email, String contraseña) {
+        this.email = email;
+        this.contraseña = contraseña;
         initComponents();
         setLocationRelativeTo(null);
         this.Administrador = new Administrador(email,contraseña);
@@ -33,12 +35,15 @@ public class EstudianteA extends javax.swing.JFrame {
         Informacion.setCaretPosition(0);
     }
     
-    private void abrirInterfazVerEstudiante() {
-        VerEstudiante verEstudiante = new VerEstudiante(email,contraseña);
-        verEstudiante.setVisible(true);
-        this.dispose(); 
+    private void abrirInterfaz() {
+    boolean esEstudianteA = this instanceof EstudianteA;
+    Ver ver = esEstudianteA ? new Ver(email, contraseña) : null;
+    if (ver != null) {
+        ver.setVisible(true);
+        this.dispose();
     }
-
+}
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,7 +59,7 @@ public class EstudianteA extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        Ver = new javax.swing.JButton();
         atras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -82,11 +87,11 @@ public class EstudianteA extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton2.setText("ELIMINAR");
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton3.setText("VER");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        Ver.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        Ver.setText("VER");
+        Ver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                VerActionPerformed(evt);
             }
         });
 
@@ -120,7 +125,7 @@ public class EstudianteA extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Ver, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(38, 38, 38))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -137,7 +142,7 @@ public class EstudianteA extends javax.swing.JFrame {
                         .addGap(75, 75, 75)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(80, 80, 80)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Ver, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -152,9 +157,7 @@ public class EstudianteA extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -167,9 +170,9 @@ public class EstudianteA extends javax.swing.JFrame {
         ingresar.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        abrirInterfazVerEstudiante();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void VerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerActionPerformed
+        abrirInterfaz();
+    }//GEN-LAST:event_VerActionPerformed
 
     private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
         // TODO add your handling code here:
@@ -216,10 +219,10 @@ public class EstudianteA extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Informacion;
+    private javax.swing.JButton Ver;
     private javax.swing.JButton atras;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
