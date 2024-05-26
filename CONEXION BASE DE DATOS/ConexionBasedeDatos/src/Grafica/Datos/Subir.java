@@ -5,34 +5,64 @@
 package Grafica.Datos;
 
 import Grafica.Administrativo.EstudianteA;
+import Grafica.Administrativo.ProfesorA;
 import javax.swing.DefaultComboBoxModel;
 import ucompensar.codigo.clases.Administrador;
+
 
 /**
  *
  * @author JUAN DAVID
  */
-public class Ingresar extends javax.swing.JFrame {
+public class Subir extends javax.swing.JFrame {
 
     private String[] tipoCedulas;
     private Administrador administrador;
     private EstudianteA estudiante;
+    private ProfesorA profesor;
     /**
      * Creates new form Ingresar
      */
-    public Ingresar(String email, String contraseña, EstudianteA estudiante) {
+    public Subir(String email, String contraseña, EstudianteA estudiante, ProfesorA profesor) {
         initComponents();
         setLocationRelativeTo(null);
         this.estudiante = estudiante;
         this.administrador = new Administrador (email, contraseña);
         this.tipoCedulas = administrador.obtenerTipoCedula();
         cargarCedulas();
+        fechaDeNacimiento();
+    }
+    
+    private void subirInfo(){
     }
     
     private void cargarCedulas() {
         DefaultComboBoxModel<String> nombresModel = new DefaultComboBoxModel<>(tipoCedulas);
         TipoCedulas.setModel(nombresModel);
+    }
+    
+    private void fechaDeNacimiento(){
+        for (int i = 1900; i <= 2024; i++) {
+        Año.addItem(String.valueOf(i));
+        }
+        for (int i = 1; i <= 12; i++) {
+        Mes.addItem(String.valueOf(i));
+        }
+        for (int i = 1; i <= 31; i++) {
+        Dia.addItem(String.valueOf(i));
+        }
         
+        Año.setSelectedItem("2024");
+        Mes.setSelectedItem(String.valueOf(java.time.LocalDate.now().getMonthValue()));
+        Dia.setSelectedItem(String.valueOf(java.time.LocalDate.now().getDayOfMonth())); 
+    }
+    
+    private void Subir(String nombre, String apellido, String tipoIdentificacion, 
+            String numeroIdentificacion,String numeroCelular, String direccion,String direccionEmail, String fechaNacimiento){
+        Informacion.setText("Nombre: " + nombre + "\nApellido: " + apellido + "\nTipo Identificación: " + tipoIdentificacion 
+                + "\nNúmero Identificación: " + numeroIdentificacion + "\nNúmero Celular: " + numeroCelular 
+                + "\nDirección: " + direccion + "\nDirección Email: " + direccionEmail + "\nFecha Nacimiento: " 
+                + fechaNacimiento);
     }
 
     /**
@@ -61,16 +91,19 @@ public class Ingresar extends javax.swing.JFrame {
         numeroDeCelular = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        Direccion = new javax.swing.JTextArea();
+        DireccionEmail = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
         Dia = new javax.swing.JComboBox<>();
-        Año1 = new javax.swing.JComboBox<>();
+        Año = new javax.swing.JComboBox<>();
         Mes = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         atras = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        Informacion = new javax.swing.JTextArea();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        Direccion = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -131,25 +164,25 @@ public class Ingresar extends javax.swing.JFrame {
         jScrollPane5.setViewportView(numeroDeCelular);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel6.setText("Direccion:");
+        jLabel6.setText("Direccion Email:");
 
         jScrollPane6.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane6.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        Direccion.setColumns(20);
-        Direccion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        Direccion.setRows(5);
-        jScrollPane6.setViewportView(Direccion);
+        DireccionEmail.setColumns(20);
+        DireccionEmail.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        DireccionEmail.setRows(5);
+        jScrollPane6.setViewportView(DireccionEmail);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel7.setText("Fecha de Nacimiento: ");
 
         Dia.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        Año1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        Año1.addActionListener(new java.awt.event.ActionListener() {
+        Año.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Año.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Año1ActionPerformed(evt);
+                AñoActionPerformed(evt);
             }
         });
 
@@ -157,6 +190,11 @@ public class Ingresar extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton1.setText("SUBIR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         atras.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         atras.setText("←");
@@ -171,14 +209,25 @@ public class Ingresar extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        Informacion.setEditable(false);
+        Informacion.setBackground(new java.awt.Color(255, 255, 255));
+        Informacion.setColumns(20);
+        Informacion.setRows(5);
+        jScrollPane1.setViewportView(Informacion);
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setText("INFORMACION SUBIDA");
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel9.setText("Direccion:");
+
+        jScrollPane7.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane7.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+        Direccion.setColumns(20);
+        Direccion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Direccion.setRows(5);
+        jScrollPane7.setViewportView(Direccion);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -194,9 +243,9 @@ public class Ingresar extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel9)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel5)
                                     .addGap(18, 18, 18)
@@ -208,7 +257,7 @@ public class Ingresar extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel7)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(Año1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Año, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(36, 36, 36)
                                     .addComponent(Mes, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(32, 32, 32)
@@ -225,7 +274,11 @@ public class Ingresar extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel1)
                                         .addGap(29, 29, 29)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(atras, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(468, 468, 468)))))
@@ -266,18 +319,23 @@ public class Ingresar extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(25, 25, 25)
+                        .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(Dia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Año1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(19, 19, 19)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel9)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(Dia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Año, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(19, 19, 19)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
@@ -305,9 +363,23 @@ public class Ingresar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TipoCedulasActionPerformed
 
-    private void Año1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Año1ActionPerformed
+    private void AñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AñoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Año1ActionPerformed
+    }//GEN-LAST:event_AñoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String nombre = Nombre.getText();
+        String apellido = Apellido.getText();
+        String tipoIdentificacion = (String) TipoCedulas.getSelectedItem();
+        String numeroIdentificacion = numeroDeIdentificacion.getText();
+        String numeroCelular = numeroDeCelular.getText();
+        String direccion = Direccion.getText();
+        String direccionEmail = DireccionEmail.getText(); 
+        String fechaNacimiento = Dia.getSelectedItem().toString() + "/" + Mes.getSelectedItem().toString() + "/" + Año.getSelectedItem().toString();
+        Subir(nombre, apellido, tipoIdentificacion, numeroIdentificacion, numeroCelular, direccion, direccionEmail, fechaNacimiento);
+        administrador.subirEstudiante();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -326,31 +398,35 @@ public class Ingresar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Ingresar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Subir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Ingresar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Subir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Ingresar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Subir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Ingresar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Subir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+                ProfesorA profesor = new ProfesorA ("","");
                 EstudianteA estudiante = new EstudianteA("","");
-                new Ingresar("","",estudiante).setVisible(true);
+                new Subir("","",estudiante, profesor).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Apellido;
-    private javax.swing.JComboBox<String> Año1;
+    private javax.swing.JComboBox<String> Año;
     private javax.swing.JComboBox<String> Dia;
     private javax.swing.JTextArea Direccion;
+    private javax.swing.JTextArea DireccionEmail;
+    private javax.swing.JTextArea Informacion;
     private javax.swing.JComboBox<String> Mes;
     private javax.swing.JTextArea Nombre;
     private javax.swing.JComboBox<String> TipoCedulas;
@@ -364,6 +440,7 @@ public class Ingresar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -371,7 +448,7 @@ public class Ingresar extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTextArea numeroDeCelular;
     private javax.swing.JTextArea numeroDeIdentificacion;
     // End of variables declaration//GEN-END:variables

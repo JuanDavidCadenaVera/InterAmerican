@@ -4,8 +4,8 @@
  */
 package Grafica.Administrativo;
 
+import Grafica.Datos.Subir;
 import Grafica.Datos.Ver;
-import Grafica.Estudiante.*;
 import ucompensar.codigo.clases.Estudiante;
 
 /**
@@ -18,6 +18,7 @@ public class ProfesorA extends javax.swing.JFrame {
     private String email;
     private String contraseña;
     private VentanaAdministrativo administrador;
+    private EstudianteA estudianteA;
 
     /**
      * Creates new form Nivel
@@ -28,19 +29,15 @@ public class ProfesorA extends javax.swing.JFrame {
         this.contraseña = contraseña;
         this.estudiante = new Estudiante(email, contraseña);
         this.administrador = new VentanaAdministrativo (email,contraseña);
+        this.estudianteA = new EstudianteA(email, contraseña); 
         mostrarInformacionPersonal();
         setLocationRelativeTo(null);
-    }
-
-    private void abrirInterfazVerProfesor() {
-        Ver ver = new Ver (email,contraseña);
-        ver.setVisible(true);
-        this.dispose(); 
     }
 
     private void mostrarInformacionPersonal() {
         String informacionEstudiante = this.estudiante.Consultar();
         Informacion.setText(informacionEstudiante);
+        Informacion.setCaretPosition(0);
     }
 
     /**
@@ -54,7 +51,7 @@ public class ProfesorA extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Informacion = new javax.swing.JTextArea();
-        INGRESAR = new javax.swing.JToggleButton();
+        Subir = new javax.swing.JToggleButton();
         jToggleButton1 = new javax.swing.JToggleButton();
         VER = new javax.swing.JToggleButton();
         atras = new javax.swing.JButton();
@@ -90,8 +87,13 @@ public class ProfesorA extends javax.swing.JFrame {
                 .addGap(50, 50, 50))
         );
 
-        INGRESAR.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        INGRESAR.setText("SUBIR");
+        Subir.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        Subir.setText("SUBIR");
+        Subir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SubirActionPerformed(evt);
+            }
+        });
 
         jToggleButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jToggleButton1.setText("ELIMINAR");
@@ -138,7 +140,7 @@ public class ProfesorA extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(INGRESAR, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                            .addComponent(Subir, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                         .addGap(87, 87, 87))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
@@ -156,7 +158,7 @@ public class ProfesorA extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(INGRESAR)
+                .addComponent(Subir)
                 .addGap(61, 61, 61)
                 .addComponent(jToggleButton1)
                 .addGap(71, 71, 71)
@@ -181,7 +183,12 @@ public class ProfesorA extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VERActionPerformed
-        abrirInterfazVerProfesor();
+        boolean ProfesorA = this instanceof ProfesorA;
+        Ver ver = ProfesorA ? new Ver(email, contraseña) : null;
+        if (ver != null) {
+        ver.setVisible(true);
+        this.dispose();
+        }
     }//GEN-LAST:event_VERActionPerformed
 
     private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
@@ -189,6 +196,16 @@ public class ProfesorA extends javax.swing.JFrame {
         this.dispose();
         administrador.setVisible(true);
     }//GEN-LAST:event_atrasActionPerformed
+
+    private void SubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubirActionPerformed
+        // TODO add your handling code here:
+        boolean ProfesorA = this instanceof ProfesorA;
+        Subir subir = ProfesorA ? new Subir (email,contraseña,estudianteA,this) : null;
+        if (subir != null){
+        subir.setVisible(true);
+        this.dispose();
+        }
+    }//GEN-LAST:event_SubirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,6 +237,7 @@ public class ProfesorA extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new ProfesorA("", "").setVisible(true);
             }
@@ -227,8 +245,8 @@ public class ProfesorA extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton INGRESAR;
     private javax.swing.JTextArea Informacion;
+    private javax.swing.JToggleButton Subir;
     private javax.swing.JToggleButton VER;
     private javax.swing.JButton atras;
     private javax.swing.JLabel jLabel1;
