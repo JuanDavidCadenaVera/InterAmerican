@@ -102,6 +102,11 @@ public class Ingresar extends javax.swing.JFrame {
         jLabel3.setText("Tipo de Identicacion:");
 
         TipoCedulas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        TipoCedulas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TipoCedulasActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setText("Numero de Celular:");
@@ -142,6 +147,11 @@ public class Ingresar extends javax.swing.JFrame {
         Dia.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         Año1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Año1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Año1ActionPerformed(evt);
+            }
+        });
 
         Mes.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -245,9 +255,9 @@ public class Ingresar extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(TipoCedulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TipoCedulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -290,6 +300,14 @@ public class Ingresar extends javax.swing.JFrame {
         this.dispose();
         this.estudiante.setVisible(true);
     }//GEN-LAST:event_atrasActionPerformed
+
+    private void TipoCedulasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TipoCedulasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TipoCedulasActionPerformed
+
+    private void Año1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Año1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Año1ActionPerformed
 
     /**
      * @param args the command line arguments

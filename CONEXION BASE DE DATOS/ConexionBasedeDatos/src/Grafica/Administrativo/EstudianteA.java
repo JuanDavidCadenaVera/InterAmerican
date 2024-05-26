@@ -4,6 +4,7 @@
  */
 package Grafica.Administrativo;
 
+import Grafica.Datos.verInformacion.VerEstudiante;
 import Grafica.Datos.Ingresar;
 import ucompensar.codigo.clases.Administrador;
 
@@ -28,6 +29,12 @@ public class EstudianteA extends javax.swing.JFrame {
         String informacionAdministrador = this.Administrador.Consultar();
         Informacion.setText(informacionAdministrador);
         Informacion.setCaretPosition(0);
+    }
+    
+    private void abrirInterfazVerEstudiante() {
+        VerEstudiante verEstudiante = new VerEstudiante();
+        verEstudiante.setVisible(true);
+        this.dispose(); // Cierra la interfaz actual
     }
 
     /**
@@ -74,6 +81,11 @@ public class EstudianteA extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton3.setText("VER");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -134,6 +146,10 @@ public class EstudianteA extends javax.swing.JFrame {
         Ingresar ingresar = new Ingresar(email, contraseña, this);
         ingresar.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        abrirInterfazVerEstudiante();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
