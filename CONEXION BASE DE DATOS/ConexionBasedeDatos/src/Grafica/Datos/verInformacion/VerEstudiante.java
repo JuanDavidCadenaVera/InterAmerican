@@ -4,6 +4,7 @@
  */
 package Grafica.Datos.verInformacion;
 
+import Grafica.Administrativo.EstudianteA;
 import java.util.List;
 import ucompensar.codigo.clases.Estudiante;
 
@@ -12,13 +13,15 @@ import ucompensar.codigo.clases.Estudiante;
  * @author fabia
  */
 public class VerEstudiante extends javax.swing.JFrame {
-
+    private EstudianteA estudiante;
     /**
      * Creates new form VerEstudiante
      */
-    public VerEstudiante() {
+    public VerEstudiante(String email, String contraseña) {
         initComponents();
         listarEstudiantes();
+        setLocationRelativeTo(null);
+        this.estudiante = new EstudianteA (email,contraseña);
     }
     
     private void listarEstudiantes() {
@@ -27,7 +30,6 @@ public class VerEstudiante extends javax.swing.JFrame {
         for (String estudiante : estudiantes) {
             infoEstudiantes.append(estudiante).append("\n\n");
         }
-        // Mostrar la información en el área de texto
         ListadoE.setText(infoEstudiantes.toString());
         ListadoE.revalidate();
         ListadoE.repaint();
@@ -48,6 +50,7 @@ public class VerEstudiante extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         ListadoE = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
+        atras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -63,6 +66,18 @@ public class VerEstudiante extends javax.swing.JFrame {
 
         jPanel1.setLayout(null);
 
+        atras.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        atras.setText("←");
+        atras.setBorder(null);
+        atras.setBorderPainted(false);
+        atras.setContentAreaFilled(false);
+        atras.setDefaultCapable(false);
+        atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atrasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -70,13 +85,17 @@ public class VerEstudiante extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(atras)))
+                        .addGap(75, 75, 75)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(171, 171, 171)
-                        .addComponent(jLabel1)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addGap(14, 14, 14)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 759, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -85,14 +104,23 @@ public class VerEstudiante extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(jLabel1))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(13, 13, 13)
+                        .addComponent(atras)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        estudiante.setVisible(true);
+    }//GEN-LAST:event_atrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -123,14 +151,16 @@ public class VerEstudiante extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new VerEstudiante().setVisible(true);
+                new VerEstudiante("","").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea ListadoE;
+    private javax.swing.JButton atras;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

@@ -4,6 +4,7 @@
  */
 package Grafica.Datos.verInformacion;
 
+import Grafica.Administrativo.ProfesorA;
 import java.util.List;
 import ucompensar.codigo.clases.Profesor;
 
@@ -12,13 +13,15 @@ import ucompensar.codigo.clases.Profesor;
  * @author fabia
  */
 public class VerProfesor extends javax.swing.JFrame {
-
+    private ProfesorA profesor;
     /**
      * Creates new form VerProfesor
      */
-    public VerProfesor() {
+    public VerProfesor(String email, String contraseña) {
         initComponents();
         listarProfesores();
+        setLocationRelativeTo(null);
+        this.profesor = new ProfesorA (email,contraseña);
 
     }
     
@@ -47,6 +50,7 @@ public class VerProfesor extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         Listado = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        atras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,6 +65,18 @@ public class VerProfesor extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setText("LISTA DE PROFESORES");
 
+        atras.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        atras.setText("←");
+        atras.setBorder(null);
+        atras.setBorderPainted(false);
+        atras.setContentAreaFilled(false);
+        atras.setDefaultCapable(false);
+        atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atrasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -71,16 +87,20 @@ public class VerProfesor extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(204, 204, 204)
+                        .addGap(47, 47, 47)
+                        .addComponent(atras)
+                        .addGap(93, 93, 93)
                         .addComponent(jLabel1)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(atras))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
@@ -98,6 +118,12 @@ public class VerProfesor extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        profesor.setVisible(true);
+    }//GEN-LAST:event_atrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -129,13 +155,14 @@ public class VerProfesor extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VerProfesor().setVisible(true);
+                new VerProfesor("","").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Listado;
+    private javax.swing.JButton atras;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
