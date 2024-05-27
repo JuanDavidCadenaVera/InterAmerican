@@ -4,6 +4,8 @@
  */
 package Grafica.Profesor;
 
+import Grafica.Instituto;
+
 
 /**
  *
@@ -162,7 +164,7 @@ public class VentanaProfesor extends javax.swing.JFrame {
     private void jButtonInsitutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInsitutoActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Instituto instituto = new Instituto (this);
+        Instituto instituto = new Instituto (email,contraseña,"profesor");
         instituto.setVisible(true);
     }//GEN-LAST:event_jButtonInsitutoActionPerformed
 

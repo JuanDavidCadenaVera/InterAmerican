@@ -4,6 +4,7 @@
  */
 package Grafica.Administrativo;
 
+import Grafica.Datos.Eliminar;
 import Grafica.Datos.Subir;
 import Grafica.Datos.Ver;
 import ucompensar.codigo.clases.Administrador;
@@ -63,6 +64,8 @@ public class EstudianteA extends javax.swing.JFrame {
         Informacion.setColumns(20);
         Informacion.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         Informacion.setRows(5);
+        Informacion.setToolTipText("");
+        Informacion.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(Informacion);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -78,6 +81,11 @@ public class EstudianteA extends javax.swing.JFrame {
 
         eliminar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         eliminar.setText("ELIMINAR");
+        eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarActionPerformed(evt);
+            }
+        });
 
         Ver.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         Ver.setText("VER");
@@ -177,6 +185,16 @@ public class EstudianteA extends javax.swing.JFrame {
         this.dispose();
         administrador.setVisible(true);
     }//GEN-LAST:event_atrasActionPerformed
+
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+        // TODO add your handling code here:
+        boolean EstudianteA = this instanceof EstudianteA;
+        Eliminar eliminar = EstudianteA ? new Eliminar(email, contraseña,"estudiante") : null;
+        if (eliminar != null) {
+        eliminar.setVisible(true);
+        this.dispose();
+        }
+    }//GEN-LAST:event_eliminarActionPerformed
 
     /**
      * @param args the command line arguments

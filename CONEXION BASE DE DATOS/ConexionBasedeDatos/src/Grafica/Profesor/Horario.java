@@ -31,8 +31,9 @@ public class Horario extends javax.swing.JFrame {
     }
     
     private void mostrarInformacionPersonal() {
-        String informacionProfesor = this.profesor.EstudiantesNotas();
+        String informacionProfesor = this.profesor.Consultar();
         Informacion.setText(informacionProfesor);
+        Informacion.setCaretPosition(0);
     }
      private void mostrarInformacionHorario() {
         String informacionHorario = this.profesor.carga();

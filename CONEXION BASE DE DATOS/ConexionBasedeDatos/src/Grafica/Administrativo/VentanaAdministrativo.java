@@ -4,6 +4,8 @@
  */
 package Grafica.Administrativo;
 
+import Grafica.Instituto;
+
 /**
  *
  * @author JUAN DAVID
@@ -167,6 +169,9 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
 
     private void jButtonInstitutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInstitutoActionPerformed
         // TODO add your handling code here:
+         this.dispose();
+        Instituto instituto = new Instituto (email,contraseña,"administrador");
+        instituto.setVisible(true);
     }//GEN-LAST:event_jButtonInstitutoActionPerformed
 
     /**

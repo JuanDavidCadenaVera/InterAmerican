@@ -36,7 +36,8 @@ public class Ver extends javax.swing.JFrame {
         } else if (profesorA != null) {
         listadotexto.setFont(new java.awt.Font("Segoe UI", 1, 36));
         listadotexto.setText("LISTA DE PROFESORES");
-    }
+        }
+        
         
         listar();
     }

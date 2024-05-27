@@ -4,6 +4,7 @@
  */
 package Grafica.Administrativo;
 
+import Grafica.Datos.Eliminar;
 import Grafica.Datos.Subir;
 import Grafica.Datos.Ver;
 import ucompensar.codigo.clases.Estudiante;
@@ -52,7 +53,7 @@ public class ProfesorA extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         Informacion = new javax.swing.JTextArea();
         Subir = new javax.swing.JToggleButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        Eliminar = new javax.swing.JToggleButton();
         VER = new javax.swing.JToggleButton();
         atras = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -68,6 +69,7 @@ public class ProfesorA extends javax.swing.JFrame {
         Informacion.setColumns(20);
         Informacion.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         Informacion.setRows(5);
+        Informacion.setAutoscrolls(false);
         jScrollPane1.setViewportView(Informacion);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -83,8 +85,8 @@ public class ProfesorA extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-                .addGap(50, 50, 50))
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
 
         Subir.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -95,8 +97,13 @@ public class ProfesorA extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jToggleButton1.setText("ELIMINAR");
+        Eliminar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        Eliminar.setText("ELIMINAR");
+        Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EliminarActionPerformed(evt);
+            }
+        });
 
         VER.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         VER.setText("VER");
@@ -139,7 +146,7 @@ public class ProfesorA extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Subir, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                         .addGap(87, 87, 87))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -155,12 +162,12 @@ public class ProfesorA extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(42, 42, 42))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(123, Short.MAX_VALUE)
                 .addComponent(Subir)
                 .addGap(61, 61, 61)
-                .addComponent(jToggleButton1)
+                .addComponent(Eliminar)
                 .addGap(71, 71, 71)
                 .addComponent(VER)
                 .addGap(67, 67, 67))
@@ -207,6 +214,16 @@ public class ProfesorA extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_SubirActionPerformed
 
+    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
+        // TODO add your handling code here:
+        boolean ProfesorA = this instanceof ProfesorA;
+        Eliminar eliminar = ProfesorA ? new Eliminar(email, contraseña,"profesor") : null;
+        if (eliminar != null) {
+        eliminar.setVisible(true);
+        this.dispose();
+        }
+    }//GEN-LAST:event_EliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -245,6 +262,7 @@ public class ProfesorA extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton Eliminar;
     private javax.swing.JTextArea Informacion;
     private javax.swing.JToggleButton Subir;
     private javax.swing.JToggleButton VER;
@@ -253,6 +271,5 @@ public class ProfesorA extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

@@ -16,9 +16,11 @@ INSERT INTO tb_programa (TbPr_ID_Programa, TbPr_Nombre_Programa, TbPr_Duracion, 
 ('TPG-3', 'SHORT', '6_meses', 600000);
 
 INSERT INTO tb_personas (TbP_ID_Personas, TbP_Tipo_Personas, TbP_Tipo_Documento, TbP_Nombre, TbP_Apellido, TbP_Telefono, TbP_Direccion_Email, TbP_Direccion, TbP_Fecha_Nacimiento) VALUES
+('1029141151','TP-1','TD-02','Juan','Cadena','3054394381','cadenaverajuandavid@gmail.com','Carrera 79 A #5-27Sur','2005-06-05');
 
 INSERT INTO tb_matricula (TbM_ID_Matricula, TbM_ID_Persona, TbM_ID_Programa, TbM_Fecha) VALUES
-('TM-84','6969458426','TPG-3','2023-7-5');
+('TM-53','1029141151','TPG-3','2024-7-20');
+
 
 INSERT INTO tb_contrato (TbC_ID_Contrato, TbC_ID_Personas, TbC_Fecha, TbC_Salario_Hora) VALUES
 ('C-15','1033097397','2024-6-20',6300);
@@ -34,6 +36,7 @@ INSERT INTO tb_carga_docente (TbCD_ID_Detalles, TbCD_Contrato, TbCD_Horas_Trabaj
 ('DT-15','C-15','5','Lunes');
 
 INSERT INTO tb_Usuarios (TbU_Email, TbU_ID_Contraseña, TbU_Tipo_Persona) VALUES
+('cadenaverajuandavid@gmail.com','1029141151','TP-1');
 
 INSERT INTO tb_nivel (TbN_ID_Nivel, TbN_Duracion_Horas) VALUES 
 ('A1','10 Horas semanales'),
@@ -52,8 +55,10 @@ INSERT INTO tb_curso_nombre (TbCN_ID_Curso, TbCN_Nombre_Curso) VALUES
 ('C-302','Curso Perfecto');
 
 INSERT INTO tb_curso(TbCo_ID_Curso, TbCo_ID_Matricula, TbCo_ID_Nivel, TbCo_ID_Horario, TbCo_ID_Contrato) VALUES 
+('B-202','TM-53','B2','1','C-04');
 
 INSERT INTO tb_notas (TbN_ID_Nota, TbN_ID_Curso, TbN_ID_Matricula, TbN_ID_Contrato) VALUES
+('3.8','B-202','TM-53','C-04');
 
 INSERT INTO tb_nivel_matricula (TbNM_ID_Horario, TbNM_ID_Nivel, TbNM_ID_Matricula, TbNM_ID_Contrato, TbNM_ID_Curso) VALUES 
-
+('1','B2','TM-53','C-04','B-202');
