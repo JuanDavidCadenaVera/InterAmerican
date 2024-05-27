@@ -401,7 +401,6 @@ public class Profesor extends Personas implements CargaDocente, EstudiantesP {
         return estudiantes.toString();
     }
 
-    // Nuevo método para listar todos los profesores
     public static List<String> listarTodosLosProfesores() {
     List<String> profesores = new ArrayList<>();
     Conexion conexion = new Conexion();
@@ -416,9 +415,8 @@ public class Profesor extends Personas implements CargaDocente, EstudiantesP {
                      "C.TbC_Salario_Hora, P.TbP_Direccion, P.TbP_Telefono " +
                      "FROM tb_personas P " +
                      "JOIN tb_contrato C ON P.TbP_ID_Personas = C.TbC_ID_Personas " +
-                     "WHERE P.TbP_Tipo_Personas = ?";
+                     "WHERE P.TbP_Tipo_Personas = 'TP-2'";
         stmt = conn.prepareStatement(sql);
-        stmt.setString(1, "TP-2"); // Tipo de persona 'TP-2' para profesores
         rs = stmt.executeQuery();
 
         while (rs.next()) {
@@ -432,7 +430,7 @@ public class Profesor extends Personas implements CargaDocente, EstudiantesP {
             int salarioHora = rs.getInt("TbC_Salario_Hora");
             String direccion = rs.getString("TbP_Direccion");
             String telefono = rs.getString("TbP_Telefono");
-            // Agregar información al formato deseado
+            
             String infoProfesor = "Nombre: " + nombre + apellido + "\n" +
                                   "Correo: " + email + "\n" +
                                   "Edad: " + edad + "\n" +

@@ -6,6 +6,7 @@ package Grafica.Datos;
 
 import Grafica.Administrativo.EstudianteA;
 import Grafica.Administrativo.ProfesorA;
+import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import ucompensar.codigo.clases.Administrador;
 
@@ -16,29 +17,40 @@ import ucompensar.codigo.clases.Administrador;
  */
 public class Subir extends javax.swing.JFrame {
 
-    private String[] tipoCedulas;
+    private Map<String, String> tipoCedulas;
     private Administrador administrador;
     private EstudianteA estudiante;
     private ProfesorA profesor;
     /**
      * Creates new form Ingresar
      */
-    public Subir(String email, String contraseña, EstudianteA estudiante, ProfesorA profesor) {
+    public Subir(String email, String contraseña, EstudianteA estudiante, ProfesorA profesor, String tipoUsuario) {
         initComponents();
         setLocationRelativeTo(null);
-        this.estudiante = estudiante;
         this.administrador = new Administrador (email, contraseña);
         this.tipoCedulas = administrador.obtenerTipoCedula();
         cargarCedulas();
         fechaDeNacimiento();
-    }
-    
-    private void subirInfo(){
+        
+        if (tipoUsuario.equals("estudiante")) {
+            this.estudiante = new EstudianteA(email, contraseña);
+        } else if (tipoUsuario.equals("profesor")) {
+            this.profesor = new ProfesorA(email, contraseña);
+        }
     }
     
     private void cargarCedulas() {
-        DefaultComboBoxModel<String> nombresModel = new DefaultComboBoxModel<>(tipoCedulas);
+        String[] cedulas = tipoCedulas.keySet().toArray(new String[0]);
+        DefaultComboBoxModel<String> nombresModel = new DefaultComboBoxModel<>();
+        for (int i = cedulas.length - 1; i >= 0; i--) {
+            nombresModel.addElement(cedulas[i]);
+        }   
         TipoCedulas.setModel(nombresModel);
+    }
+    
+    private String obtenerIdTipoCedulaSeleccionado() {
+    String tipoCedulaSeleccionado = (String) TipoCedulas.getSelectedItem();
+    return tipoCedulas.get(tipoCedulaSeleccionado);
     }
     
     private void fechaDeNacimiento(){
@@ -57,13 +69,26 @@ public class Subir extends javax.swing.JFrame {
         Dia.setSelectedItem(String.valueOf(java.time.LocalDate.now().getDayOfMonth())); 
     }
     
-    private void Subir(String nombre, String apellido, String tipoIdentificacion, 
+    private void subirEstudiante(String nombre, String apellido, String tipoIdentificacion, 
             String numeroIdentificacion,String numeroCelular, String direccion,String direccionEmail, String fechaNacimiento){
-        Informacion.setText("Nombre: " + nombre + "\nApellido: " + apellido + "\nTipo Identificación: " + tipoIdentificacion 
+            Informacion.setText("Nombre: " + nombre + "\nApellido: " + apellido + "\nTipo Identificación: " + tipoIdentificacion 
                 + "\nNúmero Identificación: " + numeroIdentificacion + "\nNúmero Celular: " + numeroCelular 
                 + "\nDirección: " + direccion + "\nDirección Email: " + direccionEmail + "\nFecha Nacimiento: " 
                 + fechaNacimiento);
+            administrador.subirEstudiante(numeroIdentificacion, tipoIdentificacion, nombre, apellido, numeroCelular, direccionEmail, direccion, fechaNacimiento);
+    
     }
+    
+    
+     private void subirProfesor(String nombre, String apellido, String tipoIdentificacion, 
+            String numeroIdentificacion,String numeroCelular, String direccion,String direccionEmail, String fechaNacimiento){
+            Informacion.setText("Nombre: " + nombre + "\nApellido: " + apellido + "\nTipo Identificación: " + tipoIdentificacion 
+                + "\nNúmero Identificación: " + numeroIdentificacion + "\nNúmero Celular: " + numeroCelular 
+                + "\nDirección: " + direccion + "\nDirección Email: " + direccionEmail + "\nFecha Nacimiento: " 
+                + fechaNacimiento);
+            administrador.subirProfesor(numeroIdentificacion, tipoIdentificacion, nombre, apellido, numeroCelular, direccionEmail, direccion, fechaNacimiento);
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -96,7 +121,7 @@ public class Subir extends javax.swing.JFrame {
         Dia = new javax.swing.JComboBox<>();
         Año = new javax.swing.JComboBox<>();
         Mes = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        Subir = new javax.swing.JButton();
         atras = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Informacion = new javax.swing.JTextArea();
@@ -188,11 +213,11 @@ public class Subir extends javax.swing.JFrame {
 
         Mes.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setText("SUBIR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Subir.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        Subir.setText("SUBIR");
+        Subir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                SubirActionPerformed(evt);
             }
         });
 
@@ -237,7 +262,7 @@ public class Subir extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(278, 278, 278)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Subir, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -334,7 +359,7 @@ public class Subir extends javax.swing.JFrame {
                                     .addComponent(Año, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(Mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(19, 19, 19)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(Subir, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(25, Short.MAX_VALUE))
@@ -356,7 +381,11 @@ public class Subir extends javax.swing.JFrame {
 
     private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
         this.dispose();
-        this.estudiante.setVisible(true);
+        if(estudiante != null){
+          estudiante.setVisible(true);
+        } else {
+            profesor.setVisible(true);
+        }
     }//GEN-LAST:event_atrasActionPerformed
 
     private void TipoCedulasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TipoCedulasActionPerformed
@@ -367,19 +396,27 @@ public class Subir extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_AñoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void SubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubirActionPerformed
         // TODO add your handling code here:
         String nombre = Nombre.getText();
         String apellido = Apellido.getText();
-        String tipoIdentificacion = (String) TipoCedulas.getSelectedItem();
+        String tipoIdentificacion = tipoCedulas.get((String) TipoCedulas.getSelectedItem()); 
         String numeroIdentificacion = numeroDeIdentificacion.getText();
         String numeroCelular = numeroDeCelular.getText();
         String direccion = Direccion.getText();
         String direccionEmail = DireccionEmail.getText(); 
         String fechaNacimiento = Dia.getSelectedItem().toString() + "/" + Mes.getSelectedItem().toString() + "/" + Año.getSelectedItem().toString();
-        Subir(nombre, apellido, tipoIdentificacion, numeroIdentificacion, numeroCelular, direccion, direccionEmail, fechaNacimiento);
-        administrador.subirEstudiante();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    if (estudiante != null) {
+        subirEstudiante(nombre, apellido, tipoIdentificacion, 
+        numeroIdentificacion, numeroCelular, direccion,
+        direccionEmail, fechaNacimiento);
+    } else if (profesor != null) {
+        subirProfesor(nombre, apellido, tipoIdentificacion, 
+        numeroIdentificacion, numeroCelular, direccion,
+        direccionEmail, fechaNacimiento);
+    }
+    }//GEN-LAST:event_SubirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -415,7 +452,7 @@ public class Subir extends javax.swing.JFrame {
             public void run() {
                 ProfesorA profesor = new ProfesorA ("","");
                 EstudianteA estudiante = new EstudianteA("","");
-                new Subir("","",estudiante, profesor).setVisible(true);
+                new Subir("","",estudiante, profesor,"").setVisible(true);
             }
         });
     }
@@ -429,9 +466,9 @@ public class Subir extends javax.swing.JFrame {
     private javax.swing.JTextArea Informacion;
     private javax.swing.JComboBox<String> Mes;
     private javax.swing.JTextArea Nombre;
+    private javax.swing.JButton Subir;
     private javax.swing.JComboBox<String> TipoCedulas;
     private javax.swing.JButton atras;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

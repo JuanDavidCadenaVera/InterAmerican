@@ -143,9 +143,6 @@ public class Estudiante extends Personas implements Horario, Nivel {
         }
         return sb.toString();
     }
-
-    
-    
     
     public static List<String> listarTodosLosEstudiantes() {
     List<String> estudiantes = new ArrayList<>();
@@ -162,9 +159,8 @@ public class Estudiante extends Personas implements Horario, Nivel {
                      "FROM tb_personas P " +
                      "JOIN tb_matricula M ON P.TbP_ID_Personas = M.TbM_ID_Persona " +
                      "JOIN tb_notas N ON M.TbM_ID_Matricula = N.TbN_ID_Matricula " +
-                     "WHERE P.TbP_Tipo_Personas = ?";
+                     "WHERE P.TbP_Tipo_Personas = 'TP-1'";
         stmt = conn.prepareStatement(sql);
-        stmt.setString(1, "TP-1"); // Tipo de persona 'TP-1' para estudiantes
         rs = stmt.executeQuery();
 
         while (rs.next()) {
@@ -178,7 +174,6 @@ public class Estudiante extends Personas implements Horario, Nivel {
             double notaFinal = rs.getDouble("Nota_Final");
             String direccion = rs.getString("TbP_Direccion");
             String telefono = rs.getString("TbP_Telefono");
-            // Agregar información al formato deseado
             String infoEstudiante = "Nombre: " + nombre + " " + apellido + "\n" +
                                     "Correo: " + email + "\n" +
                                     "Edad: " + edad + "\n" +

@@ -184,7 +184,7 @@ public class ProfesorA extends javax.swing.JFrame {
 
     private void VERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VERActionPerformed
         boolean ProfesorA = this instanceof ProfesorA;
-        Ver ver = ProfesorA ? new Ver(email, contraseña) : null;
+        Ver ver = ProfesorA ? new Ver(email, contraseña,"profesor") : null;
         if (ver != null) {
         ver.setVisible(true);
         this.dispose();
@@ -200,7 +200,7 @@ public class ProfesorA extends javax.swing.JFrame {
     private void SubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubirActionPerformed
         // TODO add your handling code here:
         boolean ProfesorA = this instanceof ProfesorA;
-        Subir subir = ProfesorA ? new Subir (email,contraseña,estudianteA,this) : null;
+        Subir subir = ProfesorA ? new Subir (email,contraseña,estudianteA,this,"profesor") : null;
         if (subir != null){
         subir.setVisible(true);
         this.dispose();
