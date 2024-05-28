@@ -48,8 +48,6 @@ public class login extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         disable = new javax.swing.JLabel();
         show = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jLabel11 = new javax.swing.JLabel();
         InicioSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -149,18 +147,6 @@ public class login extends javax.swing.JFrame {
         });
         jPanel2.add(show, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 216, 40, 40));
 
-        jCheckBox1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jCheckBox1.setForeground(new java.awt.Color(199, 226, 255));
-        jCheckBox1.setText("Remember Password");
-        jPanel2.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 261, -1, -1));
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(199, 226, 255));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel11.setText("Forget Password?");
-        jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(254, 261, 121, 27));
-
         InicioSesion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         InicioSesion.setForeground(new java.awt.Color(25, 118, 211));
         InicioSesion.setText("LOGIN");
@@ -170,7 +156,7 @@ public class login extends javax.swing.JFrame {
                 InicioSesionActionPerformed(evt);
             }
         });
-        jPanel2.add(InicioSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 306, 341, 40));
+        jPanel2.add(InicioSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 341, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, 420, 440));
 
@@ -270,9 +256,7 @@ public class login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton InicioSesion;
     private javax.swing.JLabel disable;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
