@@ -58,19 +58,7 @@ public class Profesor extends Personas implements CargaDocente, EstudiantesP {
                 datosProfesor.append("No se encontraron datos para el email: ").append(getEmail());
             }
         } catch (SQLException e) {
-            System.err.println("Error al cargar datos del estudiante: " + e.getMessage());
             datosProfesor.append("Error al consultar datos: ").append(e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar recursos: " + ex.getMessage());
-            }
         }
         return datosProfesor.toString();
     }
@@ -108,17 +96,6 @@ public class Profesor extends Personas implements CargaDocente, EstudiantesP {
         } catch (SQLException e) {
             System.err.println("Error al cargar datos de carga laboral del docente: " + e.getMessage());
             cargaLaboral.append("Error al consultar datos de carga laboral: ").append(e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar recursos: " + ex.getMessage());
-            }
         }
         return cargaLaboral.toString();
     }
@@ -185,17 +162,6 @@ public class Profesor extends Personas implements CargaDocente, EstudiantesP {
         } catch (SQLException e) {
             System.err.println("Error al cargar estudiantes inscritos en los cursos del profesor: " + e.getMessage());
             estudiantes.append("Error al consultar estudiantes inscritos en los cursos del profesor: ").append(e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar recursos: " + ex.getMessage());
-            }
         }
         return estudiantes.toString();
     }
@@ -221,17 +187,6 @@ public class Profesor extends Personas implements CargaDocente, EstudiantesP {
             }
         } catch (SQLException e) {
             System.err.println("Error al cargar nombres de estudiantes: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar recursos: " + ex.getMessage());
-            }
         }
         return nombres.toArray(new String[0]);
     }
@@ -313,17 +268,6 @@ public class Profesor extends Personas implements CargaDocente, EstudiantesP {
                 idsEstudiantes.put(nombreEstudiante, ids);
             } catch (SQLException e) {
                 System.out.println("Error al obtener los IDs para la persona con nombre y apellido " + nombreEstudiante + ": " + e.getMessage());
-            } finally {
-                try {
-                    if (rs != null) {
-                        rs.close();
-                    }
-                    if (stmt != null) {
-                        stmt.close();
-                    }
-                } catch (SQLException ex) {
-                    System.err.println("Error al cerrar recursos: " + ex.getMessage());
-                }
             }
         }
         return idsEstudiantes;
@@ -444,16 +388,7 @@ public class Profesor extends Personas implements CargaDocente, EstudiantesP {
         }
     } catch (SQLException e) {
         System.err.println("Error al listar los profesores: " + e.getMessage());
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
-            if (conn != null) conn.close();
-        } catch (SQLException ex) {
-            System.err.println("Error al cerrar recursos: " + ex.getMessage());
-        }
     }
-
     return profesores;
 }
 

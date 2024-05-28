@@ -57,17 +57,6 @@ public class Estudiante extends Personas implements Horario, Nivel {
         } catch (SQLException e) {
             System.err.println("Error al cargar datos del estudiante: " + e.getMessage());
             datosEstudiante.append("Error al consultar datos: ").append(e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar recursos: " + ex.getMessage());
-            }
         }
         return datosEstudiante.toString();
     }
@@ -187,18 +176,7 @@ public class Estudiante extends Personas implements Horario, Nivel {
         }
     } catch (SQLException e) {
         System.err.println("Error al listar los estudiantes: " + e.getMessage());
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
-            if (conn != null) conn.close();
-        } catch (SQLException ex) {
-            System.err.println("Error al cerrar recursos: " + ex.getMessage());
-        }
     }
-
     return estudiantes;
 }
-
-
 }

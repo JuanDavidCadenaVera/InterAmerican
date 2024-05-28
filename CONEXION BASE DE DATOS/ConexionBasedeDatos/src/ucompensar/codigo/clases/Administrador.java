@@ -35,7 +35,7 @@ public class Administrador extends Personas {
         StringBuilder datosEstudiante = new StringBuilder();
         ResultSet rs = null;
         PreparedStatement stmt = null;
-    try {
+        try {
         String sql = "SELECT p.TbP_Nombre, p.TbP_Apellido, p.TbP_Tipo_Documento, p.TbP_ID_Personas, " +
                      "p.TbP_Direccion_Email, p.TbP_Direccion, p.TbP_Fecha_Nacimiento, tp.TbTP_Tipo_Persona " +
                      "FROM tb_personas p " +
@@ -62,13 +62,6 @@ public class Administrador extends Personas {
     } catch (SQLException e) {
         System.err.println("Error al cargar datos del estudiante: " + e.getMessage());
         datosEstudiante.append("Error al consultar datos: ").append(e.getMessage());
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
-        } catch (SQLException ex) {
-            System.err.println("Error al cerrar recursos: " + ex.getMessage());
-        }
     }
     return datosEstudiante.toString();
     }
@@ -87,13 +80,6 @@ public class Administrador extends Personas {
         }
     } catch (SQLException e) {
         System.err.println("Error al cargar tipos de cédula: " + e.getMessage());
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
-        } catch (SQLException ex) {
-            System.err.println("Error al cerrar recursos: " + ex.getMessage());
-        }
     }
     return tipoCedulas;
 }
@@ -141,13 +127,6 @@ public class Administrador extends Personas {
         }
     } catch (SQLException e) {
         System.err.println("Error al cargar tipos de nombre: " + e.getMessage());
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
-        } catch (SQLException ex) {
-            System.err.println("Error al cerrar recursos: " + ex.getMessage());
-        }
     }
     return nombres;
 }
@@ -166,13 +145,6 @@ public class Administrador extends Personas {
         }
     } catch (SQLException e) {
         System.err.println("Error al cargar tipos de programa: " + e.getMessage());
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
-        } catch (SQLException ex) {
-            System.err.println("Error al cerrar recursos: " + ex.getMessage());
-        }
     }
     return tipoPograma;
 }
@@ -195,10 +167,10 @@ public class Administrador extends Personas {
         stmt.setString(6, email);
         stmt.setString(7, direccion);
         
-        // Convertir la fecha de String a java.sql.Date
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         java.util.Date parsed = format.parse(fechaNacimiento);
         java.sql.Date sqlDate = new java.sql.Date(parsed.getTime());
+        
         stmt.setDate(8, sqlDate);
 
         int rowsInserted = stmt.executeUpdate();

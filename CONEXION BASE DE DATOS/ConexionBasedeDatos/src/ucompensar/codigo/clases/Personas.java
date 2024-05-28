@@ -18,8 +18,6 @@ public abstract class Personas extends Usuario{
     private String apellido;
     private String direccion;
     private String telefono;
-    private String tipoEstudiante = "TP-1";
-    private String tipoProfesor = "TP-2";
     private Date fechaNacimiento;
     
     
@@ -31,7 +29,7 @@ public abstract class Personas extends Usuario{
     public String getIdentificacion() {
         return identificacion;
     }
-
+    
     public void setIdentificacion(String identificacion) {
         this.identificacion = identificacion;
     }
@@ -76,21 +74,6 @@ public abstract class Personas extends Usuario{
         this.direccion = direccion;
     }
 
-    public String getTipoEstudiante(){
-        return tipoEstudiante;
-    }
-    
-    public void setTipoEstudiante(String tipoEstudiante){
-        this.tipoEstudiante = tipoEstudiante;
-    }
-    
-    public String getTipoProfesor(){
-        return tipoProfesor;
-    }
-    
-    public void setTipoProfesor(String tipoProfesor){
-        this.tipoProfesor = tipoProfesor;
-    }
     
     public Date getFechaNacimiento(){
         return fechaNacimiento;
